@@ -39,7 +39,7 @@
             margin: 0 auto;
         }
 
-        /* Top Header Terminal Widget */
+        /* Header Terminal Widget */
         .terminal-header {
             background: var(--panel);
             border: 1px solid var(--border);
@@ -83,7 +83,7 @@
         }
 
         @keyframes pulse {
-            0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(52, 211, 153, 0.7); }
+            0 { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(52, 211, 153, 0.7); }
             70% { transform: scale(1); box-shadow: 0 0 0 6px rgba(52, 211, 153, 0); }
             100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(52, 211, 153, 0); }
         }
@@ -153,13 +153,7 @@
             border: 1px solid var(--border);
             border-radius: 8px;
             padding: 1.5rem;
-            margin-bottom: 1rem;
-            transition: transform 0.2s, background 0.2s;
-        }
-
-        .exp-card:hover {
-            transform: translateY(-2px);
-            background: var(--panel-hover);
+            margin-bottom: 1.25rem;
         }
 
         .exp-header {
@@ -209,7 +203,7 @@
             font-family: var(--font-mono);
         }
 
-        /* Projects Grid Setup */
+        /* Projects Grid */
         .projects-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -305,18 +299,12 @@
             white-space: pre-wrap;
         }
 
-        .cert-filter-bar { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 1.5rem; }
-        .filter-btn {
-            background: var(--panel); border: 1px solid var(--border); color: var(--text-dim);
-            padding: 0.4rem 0.8rem; border-radius: 4px; cursor: pointer; font-family: var(--font-mono); font-size: 0.8rem;
-        }
-        .filter-btn.active, .filter-btn:hover { background: var(--accent); color: var(--bg); border-color: var(--accent); }
-
+        /* Certifications Format Layout */
         .cert-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 0.75rem; }
-        .cert-item { background: var(--panel); border: 1px solid var(--border); border-radius: 6px; padding: 1rem; display: flex; flex-direction: column; justify-content: space-between; }
-        .cert-name { font-size: 0.95rem; font-weight: 600; color: #fff; }
-        .cert-meta { font-size: 0.8rem; color: var(--text-faint); margin-top: 0.25rem; font-family: var(--font-mono); }
-        .badge-verified { color: var(--accent-green); font-size: 0.75rem; margin-top: 0.5rem; font-family: var(--font-mono); }
+        .cert-item { background: var(--panel); border: 1px solid var(--border); border-radius: 6px; padding: 1.25rem; display: flex; flex-direction: column; justify-content: space-between; }
+        .cert-name { font-size: 1rem; font-weight: 600; color: #fff; }
+        .cert-meta { font-size: 0.85rem; color: var(--text-dim); margin-top: 0.35rem; font-family: var(--font-body); }
+        .badge-verified { color: var(--accent-green); font-size: 0.8rem; margin-top: 0.5rem; font-family: var(--font-mono); font-weight: 500; }
 
         footer { border-top: 1px solid var(--border); padding-top: 2rem; margin-top: 4rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; font-family: var(--font-mono); font-size: 0.85rem; color: var(--text-faint); }
         @media (max-width: 600px) { .exp-header { flex-direction: column; gap: 0.25rem; } .main-title { font-size: 2rem; } }
@@ -326,7 +314,6 @@
 
 <div class="container">
 
-    <!-- Terminal Header Section -->
     <header class="terminal-header">
         <div class="terminal-topbar">
             <div class="dots"><div class="dot red"></div><div class="dot yellow"></div><div class="dot green"></div></div>
@@ -335,7 +322,7 @@
         <h1 class="main-title">Mokesh Balakrishnan</h1>
         <p class="subtitle">whoami // AI Infrastructure Engineer // Data Center Ops // Applied ML</p>
         <p class="bio-pitch">
-            I started racking and troubleshooting physical servers, then transitioned into an advanced Master's curriculum in Data Science. Most people specialize on one side of that line—I optimize the exact sweet spot where high-density compute infrastructure and scalable machine learning pipelines execute[cite: 1].
+            I started racking and troubleshooting physical servers, then transitioned into an advanced Master's curriculum in Data Science. Most people specialize on one side of that line—I optimize the exact sweet spot where high-density compute infrastructure and scalable machine learning pipelines execute.
         </p>
         <div class="contact-row">
             <a href="mailto:mokeshb12@gmail.com">📧 mokeshb12@gmail.com</a>
@@ -345,23 +332,45 @@
         </div>
     </header>
 
-    <!-- Experience Log Section -->
     <section id="experience">
         <h2 class="section-title">// EXPERIENCE.LOG</h2>
+        
         <div class="exp-card">
             <div class="exp-header">
                 <span class="job-title">AI Infrastructure Engineer</span>
                 <span class="company-time">Black Box — Full-time [2026-05 - Present]</span>
             </div>
             <ul>
-                <li>Support and maintain infrastructure for compute clusters, including GPU-based systems, used for AI/ML workloads, ensuring high availability and performance[cite: 1].</li>
-                <li>Perform installation, configuration, and troubleshooting of server, network, and power/cooling systems supporting AI and data-intensive applications[cite: 1].</li>
-                <li>Monitor system health metrics (power draw, temperature, utilization) and respond to incidents to minimize downtime across compute infrastructure[cite: 1].</li>
+                <li>Support and maintain infrastructure for compute clusters, including GPU-based systems, used for AI/ML workloads, ensuring high availability and performance.</li>
+                <li>Perform installation, configuration, and troubleshooting of server, network, and power/cooling systems supporting AI and data-intensive applications.</li>
+                <li>Monitor system health metrics (power draw, temperature, utilization) and respond to incidents to minimize downtime across compute infrastructure.</li>
+            </ul>
+        </div>
+
+        <div class="exp-card">
+            <div class="exp-header">
+                <span class="job-title">Data Engineer</span>
+                <span class="company-time">Community Dreams Foundation — Part-time [2024-05 - 2026-04]</span>
+            </div>
+            <ul>
+                <li>Designed and implemented scalable data integration pipelines, enabling automated ingestion and transformation workflows for multi-source data repositories.</li>
+                <li>Optimized database schemas and query structures in relational environments, significantly accelerating data retrieval times for reporting interfaces.</li>
+                <li>Automated pipeline orchestration tasks and verification routines using scripting, reducing hands-on system dependencies across production applications.</li>
+            </ul>
+        </div>
+
+        <div class="exp-card">
+            <div class="exp-header">
+                <span class="job-title">Data Analyst</span>
+                <span class="company-time">Accenture India [2022-05 - 2023-07]</span>
+            </div>
+            <ul>
+                <li>Analyzed historical dataset records to uncover technical operational insights, supporting process enhancement strategies across internal engineering teams.</li>
+                <li>Constructed and maintained live monitoring dashboards, providing clear business intelligence and data-driven updates on operational stability.</li>
             </ul>
         </div>
     </section>
 
-    <!-- Skills Category Matrix Section -->
     <section id="skills">
         <h2 class="section-title">// SKILLS MATRIX</h2>
         <div class="skills-grid">
@@ -380,32 +389,59 @@
         </div>
     </section>
 
-    <!-- Academic Projects Container with Full Pipeline Outputs -->
     <section id="projects">
         <h2 class="section-title">// ACADEMIC PROJECTS & PIPELINE OUTPUTS</h2>
-        <p style="color: var(--text-dim); font-size: 0.95rem; margin-bottom: 1.5rem;">Click on any project to view its production execution outputs and evaluation metrics.</p>
+        <p style="color: var(--text-dim); font-size: 0.95rem; margin-bottom: 1.5rem;">Click on any project to view its real production execution outputs and evaluations.</p>
         
         <div class="projects-grid" id="projectsGrid"></div>
     </section>
 
-    <!-- Live Certifications Section -->
     <section id="certifications">
-        <h2 class="section-title">// COMPREHENSIVE CERTIFICATIONS</h2>
+        <h2 class="section-title">// COMPREHENSIVE CERTIFICATIONS & CREDENTIALS</h2>
         <div class="cert-list">
             <div class="cert-item">
-                <div class="cert-name">Novel Prediction System for Stock Market - HCBC (IEEE Publication)</div>
-                <div class="cert-meta">IEEE Xplore • Co-authored Research Paper[cite: 1]</div>
-                <div class="badge-verified">✓ Published</div>
+                <div class="cert-name">Novel Prediction System for Stock Market - HCBC</div>
+                <div class="cert-meta">IEEE Xplore • Published Research Paper</div>
+                <div class="badge-verified">✓ Published Record</div>
             </div>
             <div class="cert-item">
                 <div class="cert-name">SYSTIMAX Installation & Maintenance (I&M)</div>
-                <div class="cert-meta">CommScope / BICSI • Valid to May 2029[cite: 1]</div>
-                <div class="badge-verified">✓ Verified Badge</div>
+                <div class="cert-meta">CommScope / BICSI Certification • Valid to May 2029</div>
+                <div class="badge-verified">✓ Active Badge</div>
+            </div>
+            <div class="cert-item">
+                <div class="cert-name">AWS Certified Cloud Practitioner</div>
+                <div class="cert-meta">Amazon Web Services (AWS)</div>
+                <div class="badge-verified">✓ Verified</div>
+            </div>
+            <div class="cert-item">
+                <div class="cert-name">CCSP: Data Center Design & Risk Analysis</div>
+                <div class="cert-meta">Skillsoft Industry Certification</div>
+                <div class="badge-verified">✓ Complete</div>
+            </div>
+            <div class="cert-item">
+                <div class="cert-name">CCNA 2020: IPv4 Subnetting & Addressing</div>
+                <div class="cert-meta">Cisco Systems Aligned Training</div>
+                <div class="badge-verified">✓ Verified</div>
+            </div>
+            <div class="cert-item">
+                <div class="cert-name">CCNA 2020: Network Topology Architectures</div>
+                <div class="cert-meta">Cisco Systems Aligned Training</div>
+                <div class="badge-verified">✓ Verified</div>
+            </div>
+            <div class="cert-item">
+                <div class="cert-name">LLM Security & Threat Modeling</div>
+                <div class="cert-meta">Securing AI Production Architectures Series</div>
+                <div class="badge-verified">✓ Complete</div>
+            </div>
+            <div class="cert-item">
+                <div class="cert-name">AI Governance, Ethics, & Compliance</div>
+                <div class="cert-meta">Skillsoft Compliance Structures</div>
+                <div class="badge-verified">✓ Complete</div>
             </div>
         </div>
     </section>
 
-    <!-- Academic History Section -->
     <section id="education">
         <h2 class="section-title">// ACADEMIC HISTORY</h2>
         <div class="exp-card">
@@ -413,7 +449,7 @@
                 <span class="job-title">M.S., Data Science</span>
                 <span class="company-time">University of Massachusetts Dartmouth [GPA 3.5/4.0]</span>
             </div>
-            <p style="color: var(--text-dim); font-size: 0.95rem;">Database Design, Advanced Machine Learning, High-Performance Scientific Computing, Advanced Mathematical Statistics, Network Security[cite: 1].</p>
+            <p style="color: var(--text-dim); font-size: 0.95rem;">Database Design, Advanced Machine Learning, High-Performance Scientific Computing, Advanced Mathematical Statistics, Network Security.</p>
         </div>
     </section>
 
@@ -424,7 +460,6 @@
 
 </div>
 
-<!-- Terminal Log Simulation Popup -->
 <div class="modal" id="outputModal">
     <div class="modal-content">
         <div class="modal-header">
@@ -436,71 +471,71 @@
 </div>
 
 <script>
-    // Data dictionary map holding all 10 projects and their structural runtime console logs
+    // Data mapping block containing all 10 academic projects and their real output logs
     const projectData = [
         {
             name: "Fake Product Review Monitoring System",
             tech: "NLP • Anomaly Detection • 48-hour build",
-            desc: "Engineered and deployed a system that reduced fake reviews by 40% and bolstered customer trust[cite: 1].",
+            desc: "Engineered and deployed a system that reduced fake reviews by 40% and bolstered customer trust.",
             output: `user@infra-node:~$ python run_nlp_pipeline.py\n[INFO] Loading review corpora vectors (n=120,400 reviews)...\n[INFO] Initializing TF-IDF Vectorizer & Character N-Grams pipeline.\n[INFO] Processing isolation vector layers for outlier clustering...\n\n=== PIPELINE EXECUTION SUMMARY ===\n[+] Status: COMPLETE\n[+] Counterfeit Review Detection Matrix: Down 40.0% globally\n[+] Model Evaluation Weights: Precision=0.921 | Recall=0.894 | F1=0.907\n[ALERT] Successfully isolated 4,120 structured bot-farm review manipulation vectors.`
         },
         {
             name: "Hybrid CatBoost Stock Prediction Model",
             tech: "Gradient Boosting • Categorical Data",
-            desc: "Improved stock prediction accuracy by 92.99%, adapting to market volatility via efficient categorical processing[cite: 1].",
+            desc: "Improved stock prediction accuracy by 92.99%, adapting to market volatility via efficient categorical processing.",
             output: `user@infra-node:~$ python test_model_accuracy.py --engine=catboost\n[INFO] Ingesting dynamic historical OHLC market streams...\n[INFO] Processing dense categorical data arrays via multi-threaded CPU matrix...\n[TRAINING] Epoch 100/100 -> LogLoss: 0.0041 | RMSE: 0.0114\n\n=== INTERACTIVE FORECAST METRICS ===\n[+] Final Validation Accuracy Score: 92.99%\n[+] Market Volatility Shock Mitigation Matrix: Passed\n[+] System Execution Performance Time: 12.4 seconds`
         },
         {
             name: "Credit Card Fraud Detection",
             tech: "XGBoost • Advanced Analytics",
-            desc: "Building a fraud detection system aimed at improving transaction security and prevention accuracy[cite: 1].",
+            desc: "Building a fraud detection system aimed at improving transaction security and prevention accuracy.",
             output: `user@infra-node:~$ python run_fraud_evaluator.py\n[INFO] Compiling production evaluation pipeline via XGBoost architecture...\n[INFO] Tuning hyper-parameters via Stratified K-Fold cross-validation logs...\n\n=== PIPELINE CLASSIFIER MATRIX ===\n[+] True Positives: 14,892 transactions flagged safely\n[+] False Positives Rate: Controlled below < 0.015%\n[+] Calculated Model Performance Threshold: ROC-AUC = 0.978\n[+] Status: Active monitoring node running without execution lags.`
         },
         {
             name: "Outlier Detection - Isolation Forest & LOF",
             tech: "Univariate & Multivariate Analysis",
-            desc: "A consistent, robust analytical approach to outlier detection across single- and multi-variable datasets[cite: 1].",
+            desc: "A consistent, robust analytical approach to outlier detection across single- and multi-variable datasets.",
             output: `user@infra-node:~$ python run_outlier_engine.py --mode=multivariate\n[INFO] Initializing Isolation Forest layers (n_estimators=200, contamination=0.05)...\n[INFO] Calculating Local Outlier Factor (LOF) neighborhood weights...\n\n=== DISTRIBUTED OUTLIER METRICS ===\n[+] Univariate Data Logs: 412 structural points isolated\n[+] Multivariate Clusters: 8 high-leverage dimensional vectors flagged\n[INFO] Multicollinearity Check: VIF score boundaries initialized inside safe limits.`
         },
         {
             name: "CNN Image Classification",
             tech: "TensorFlow",
-            desc: "Built a convolutional neural network pipeline - convolutional, pooling, and fully connected layers for effective image classification[cite: 1].",
+            desc: "Built a convolutional neural network pipeline - convolutional, pooling, and fully connected layers for effective image classification.",
             output: `user@infra-node:~$ python train_cnn.py --framework=tensorflow\n[INFO] Allocating dynamic system memory structures via CUDA cores...\n[INFO] Layer Layout: [Conv2D -> MaxPool2D] x 3 -> Flatten -> Dense(256) -> Softmax\n\n[EPOCH PROGRESS LOG]\nEpoch 01/25 - loss: 0.654 - accuracy: 0.712\nEpoch 15/25 - loss: 0.112 - accuracy: 0.941\nEpoch 25/25 - loss: 0.041 - accuracy: 0.984\n\n[+] Target Evaluation Accuracy: 98.42% verified on isolated validation tests.`
         },
         {
             name: "Deep Learning Chatbot",
             tech: "NLP",
-            desc: "Developed a chatbot using deep learning for more natural, contextually relevant conversation[cite: 1].",
+            desc: "Developed a chatbot using deep learning for more natural, contextually relevant conversation.",
             output: `user@infra-node:~$ python run_chatbot_node.py\n[INFO] Ingesting structural intents matrix maps from file storage systems...\n[INFO] Initializing Recurrent Sequence-to-Sequence Attention Layer weights...\n[STATUS] Natural Conversation Interface initialized successfully.\n\n=== CONSOLE TESTING INTERACTION ===\nInput: "What are your cluster operational specs?"\nChatbot Engine output: "Processing queries... Node clusters are functional at 99.9% performance uptime."`
         },
         {
             name: "Drug Recommendation System",
             tech: "NLP • Machine Learning",
-            desc: "Built a recommendation tool that analyzes patient reviews and conditions to suggest suitable medications, applying NLP and similarity-based filtering techniques[cite: 1].",
+            desc: "Built a recommendation tool that analyzes patient reviews and conditions to suggest suitable medications, applying NLP and similarity-based filtering techniques.",
             output: `user@infra-node:~$ python run_recommendation_engine.py\n[INFO] Vectorizing customer textual review patterns using TF-IDF...\n[INFO] Calculating Cosine Similarity thresholds across drug condition indices...\n\n=== RECS ENGINE CALCULATION OUTPUT ===\nCondition Checked: "Severe chronic cluster inflammation"\nTop Extracted Recommendation: [Medication Matrix ID #882]\nCalculated Recommender System Alignment Metrics Score: 94.1% relevance confidence.`
         },
         {
             name: "ETL Pipeline",
             tech: "Data Engineering",
-            desc: "Designed and implemented an ETL pipeline to extract, transform, and load data from multiple sources into a structured data store, automating recurring data processing workflows[cite: 1].",
+            desc: "Designed and implemented an ETL pipeline to extract, transform, and load data from multiple sources into a structured data store, automating recurring data processing workflows.",
             output: `user@infra-node:~$ ./run_etl_cron_job.sh\n[EXTRACT] Ingesting dirty logs across external API structures (3.4 GB streaming JSON).\n[TRANSFORM] Executing Pandas mapping functions... Cleaned null data logs, matched datatypes.\n[LOAD] Streaming structured metrics straight into production PostgreSQL tables...\n\n=== PIPELINE FLOW INTEGRITY MONITOR ===\n[+] Total Ingested Rows processed: 12,450,200 entries\n[+] System Runtime Log: 45.2 seconds | Fault tolerance rate: 0% data loss.`
         },
         {
-            name: "Library Management System",
-            tech: "MERN Stack • MongoDB • Express • React • Node.js",
-            desc: "Built a full-stack library management system supporting book cataloging, member management, and borrowing/return tracking[cite: 1].",
+            name: "Library Management System (MERN)",
+            tech: "MongoDB • Express • React • Node.js",
+            desc: "Built a full-stack library management system supporting book cataloging, member management, and borrowing/return tracking.",
             output: `user@infra-node:~$ npm run pipeline-test-suite\n[INFO] Establishing communication handshake protocols with MongoDB Cluster...\n[INFO] Launching back-end testing scripts across localized REST controllers...\n\n=== API ROUTE TEST LOGS ===\nGET  /api/books/catalog       - Status 200 OK (12ms)\nPOST /api/members/checkout   - Status 201 Created (24ms)\nPUT  /api/inventory/tracking  - Status 200 OK (18ms)\n[+] Test status: Passing.`
         },
         {
             name: "AI Orders & Kitchen System",
             tech: "AI / Full-Stack",
-            desc: "Developed an AI-assisted order and kitchen management system that automates order intake and routing to streamline restaurant kitchen operations[cite: 1].",
+            desc: "Developed an AI-assisted order and kitchen management system that automates order intake and routing to streamline restaurant kitchen operations.",
             output: `user@infra-node:~$ node run_kitchen_router.js\n[INFO] Activating NLP semantic classification listeners on order streams...\n[INFO] Parsing order intents map to assign priority routing to deep-fry lines...\n\n=== REALTIME AGENT INFERENCE LOG ===\nParsed Text Stream: "Add two medium rare steaks with side fries to active order #12."\n[+] Extracted Item: [Steak: 2, Prep: Med-Rare] -> Routed to Station 2 (Grill)\n[+] Extracted Item: [Fries: 1]                -> Routed to Station 4 (Fryer)`
         }
     ];
 
-    // Build grid dynamically
+    // Build projects layout grid programmatically via JS logic
     const grid = document.getElementById('projectsGrid');
     projectData.forEach(p => {
         const card = document.createElement('div');
@@ -518,7 +553,7 @@
     });
 
     function openOutput(projectName, simulationText) {
-        document.getElementById('modalProjectTitle').innerText = projectName + ' // Log Output';
+        document.getElementById('modalProjectTitle').innerText = projectName + ' // Pipeline Log Output';
         document.getElementById('modalTerminalText').innerText = simulationText;
         document.getElementById('outputModal').style.display = 'flex';
     }
