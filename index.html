@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mokesh Balakrishnan - AI Infrastructure Engineer</title>
+    <title>Academic Projects</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
@@ -12,20 +12,16 @@
         :root {
             --bg: #0b0f19;
             --panel: #131a2c;
-            --panel-hover: #1a233a;
             --border: #222f4d;
             --text: #e2e8f0;
             --text-dim: #94a3b8;
-            --text-faint: #475569;
             --accent: #38bdf8;
-            --accent-green: #34d399;
             --font-display: 'Space Grotesk', sans-serif;
             --font-body: 'Inter', sans-serif;
             --font-mono: 'IBM Plex Mono', monospace;
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
-        html { scroll-behavior: smooth; }
         body {
             background-color: var(--bg);
             color: var(--text);
@@ -38,96 +34,6 @@
             max-width: 1000px;
             margin: 0 auto;
         }
-
-        /* Header Terminal Widget */
-        .terminal-header {
-            background: var(--panel);
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            padding: 1.5rem;
-            font-family: var(--font-mono);
-            margin-bottom: 2rem;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-        }
-
-        .terminal-topbar {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 1rem;
-            border-bottom: 1px solid var(--border);
-            padding-bottom: 0.75rem;
-        }
-
-        .dots { display: flex; gap: 6px; }
-        .dot { width: 12px; height: 12px; border-radius: 50%; }
-        .dot.red { background: #ef4444; }
-        .dot.yellow { background: #f59e0b; }
-        .dot.green { background: #10b981; }
-
-        .status-badge {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-size: 0.85rem;
-            color: var(--accent-green);
-        }
-
-        .pulse {
-            width: 8px;
-            height: 8px;
-            background: var(--accent-green);
-            border-radius: 50%;
-            box-shadow: 0 0 0 0 rgba(52, 211, 153, 0.7);
-            animation: pulse 1.5s infinite;
-        }
-
-        @keyframes pulse {
-            0 { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(52, 211, 153, 0.7); }
-            70% { transform: scale(1); box-shadow: 0 0 0 6px rgba(52, 211, 153, 0); }
-            100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(52, 211, 153, 0); }
-        }
-
-        .main-title {
-            font-family: var(--font-display);
-            font-size: 2.5rem;
-            font-weight: 700;
-            color: #fff;
-            margin-bottom: 0.5rem;
-        }
-
-        .subtitle {
-            color: var(--accent);
-            font-family: var(--font-mono);
-            font-size: 1.1rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .bio-pitch {
-            font-size: 1.1rem;
-            color: var(--text-dim);
-            max-width: 800px;
-        }
-
-        .contact-row {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 1.5rem;
-            margin-top: 1.5rem;
-            font-family: var(--font-mono);
-            font-size: 0.9rem;
-        }
-
-        .contact-row a {
-            color: var(--text);
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            transition: color 0.2s;
-        }
-
-        .contact-row a:hover { color: var(--accent); }
 
         section { margin-bottom: 3.5rem; }
 
@@ -146,61 +52,6 @@
             flex: 1;
             height: 1px;
             background: var(--border);
-        }
-
-        .exp-card {
-            background: var(--panel);
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            padding: 1.5rem;
-            margin-bottom: 1.25rem;
-        }
-
-        .exp-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            flex-wrap: wrap;
-            margin-bottom: 1rem;
-        }
-
-        .job-title { font-size: 1.2rem; font-weight: 600; color: #fff; }
-        .company-time { font-family: var(--font-mono); font-size: 0.9rem; color: var(--accent); }
-        .exp-card ul { list-style-type: none; padding-left: 0; }
-        .exp-card li { position: relative; padding-left: 1.25rem; margin-bottom: 0.5rem; color: var(--text-dim); font-size: 0.95rem; }
-        .exp-card li::before { content: "•"; position: absolute; left: 0; color: var(--accent); }
-
-        .skills-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-            gap: 1rem;
-        }
-
-        .skill-category {
-            background: rgba(19, 26, 44, 0.5);
-            border: 1px solid var(--border);
-            border-radius: 6px;
-            padding: 1rem;
-        }
-
-        .skill-cat-title {
-            font-family: var(--font-mono);
-            font-size: 0.85rem;
-            color: var(--accent);
-            text-transform: uppercase;
-            margin-bottom: 0.75rem;
-            letter-spacing: 0.05em;
-        }
-
-        .skill-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; }
-        .tag {
-            background: var(--panel);
-            border: 1px solid rgba(56, 189, 248, 0.2);
-            color: var(--text);
-            padding: 0.25rem 0.5rem;
-            border-radius: 4px;
-            font-size: 0.85rem;
-            font-family: var(--font-mono);
         }
 
         /* Projects Grid */
@@ -230,164 +81,17 @@
         .proj-name { font-size: 1.15rem; font-weight: 600; color: #fff; margin-bottom: 0.3rem; }
         .proj-tech { font-family: var(--font-mono); font-size: 0.8rem; color: var(--accent); margin-bottom: 0.75rem; }
         .proj-desc { color: var(--text-dim); font-size: 0.9rem; line-height: 1.4; }
-
-        /* Certifications Layout Matrix */
-        .cert-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 0.75rem; }
-        .cert-item { background: var(--panel); border: 1px solid var(--border); border-radius: 6px; padding: 1.25rem; display: flex; flex-direction: column; justify-content: space-between; }
-        .cert-name { font-size: 1rem; font-weight: 600; color: #fff; }
-        .cert-meta { font-size: 0.85rem; color: var(--text-dim); margin-top: 0.35rem; font-family: var(--font-body); }
-        .badge-verified { color: var(--accent-green); font-size: 0.8rem; margin-top: 0.5rem; font-family: var(--font-mono); font-weight: 500; }
-
-        footer { border-top: 1px solid var(--border); padding-top: 2rem; margin-top: 4rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; font-family: var(--font-mono); font-size: 0.85rem; color: var(--text-faint); }
-        @media (max-width: 600px) { .exp-header { flex-direction: column; gap: 0.25rem; } .main-title { font-size: 2rem; } }
     </style>
 </head>
 <body>
 
 <div class="container">
 
-    <header class="terminal-header">
-        <div class="terminal-topbar">
-            <div class="dots"><div class="dot red"></div><div class="dot yellow"></div><div class="dot green"></div></div>
-            <div class="status-badge"><div class="pulse"></div><span>STATUS: ONLINE | UPTIME: 1514d 19:35:05</span></div>
-        </div>
-        <h1 class="main-title">Mokesh Balakrishnan</h1>
-        <p class="subtitle">whoami // AI Infrastructure Engineer // Data Center Ops // Applied ML</p>
-        <p class="bio-pitch">
-            I started racking and troubleshooting physical servers, then transitioned into an advanced Master's curriculum in Data Science. Most people specialize on one side of that line—I optimize the exact sweet spot where high-density compute infrastructure and scalable machine learning pipelines execute.
-        </p>
-        <div class="contact-row">
-            <a href="mailto:mokeshb12@gmail.com">📧 mokeshb12@gmail.com</a>
-            <a href="tel:508-863-2290">📱 508-863-2290</a>
-            <a href="#" target="_blank">🔗 LinkedIn</a>
-            <a href="https://Mokeshb.github.io/mokesh-b.github.io/" style="color: var(--accent);">🌐 Live Site</a>
-        </div>
-    </header>
-
-    <section id="experience">
-        <h2 class="section-title">// EXPERIENCE.LOG</h2>
-        
-        <div class="exp-card">
-            <div class="exp-header">
-                <span class="job-title">AI Infrastructure Engineer</span>
-                <span class="company-time">Black Box — Full-time [2026-05 - Present]</span>
-            </div>
-            <ul>
-                <li>Support and maintain infrastructure for compute clusters, including GPU-based systems, used for AI/ML workloads, ensuring high availability and performance.</li>
-                <li>Perform installation, configuration, and troubleshooting of server, network, and power/cooling systems supporting AI and data-intensive applications.</li>
-                <li>Monitor system health metrics (power draw, temperature, utilization) and respond to incidents to minimize downtime across compute infrastructure.</li>
-            </ul>
-        </div>
-
-        <div class="exp-card">
-            <div class="exp-header">
-                <span class="job-title">Data Engineer</span>
-                <span class="company-time">Community Dreams Foundation — Part-time [2024-05 - 2026-04]</span>
-            </div>
-            <ul>
-                <li>Designed and implemented scalable data integration pipelines, enabling automated ingestion and transformation workflows for multi-source data repositories.</li>
-                <li>Optimized database schemas and query structures in relational environments, significantly accelerating data retrieval times for reporting interfaces.</li>
-                <li>Automated pipeline orchestration tasks and verification routines using scripting, reducing hands-on system dependencies across production applications.</li>
-            </ul>
-        </div>
-
-        <div class="exp-card">
-            <div class="exp-header">
-                <span class="job-title">Data Analyst</span>
-                <span class="company-time">Accenture India [2022-05 - 2023-07]</span>
-            </div>
-            <ul>
-                <li>Analyzed historical dataset records to uncover technical operational insights, supporting process enhancement strategies across internal engineering teams.</li>
-                <li>Constructed and maintained live monitoring dashboards, providing clear business intelligence and data-driven updates on operational stability.</li>
-            </ul>
-        </div>
-    </section>
-
-    <section id="skills">
-        <h2 class="section-title">// SKILLS MATRIX</h2>
-        <div class="skills-grid">
-            <div class="skill-category">
-                <div class="skill-cat-title">Languages</div>
-                <div class="skill-tags"><span class="tag">Python</span><span class="tag">SQL</span><span class="tag">MATLAB</span><span class="tag">C</span><span class="tag">C++</span></div>
-            </div>
-            <div class="skill-category">
-                <div class="skill-cat-title">ML Frameworks</div>
-                <div class="skill-tags"><span class="tag">PyTorch</span><span class="tag">TensorFlow</span><span class="tag">Keras</span><span class="tag">Scikit-Learn</span><span class="tag">Pandas</span><span class="tag">CUDA</span></div>
-            </div>
-            <div class="skill-category">
-                <div class="skill-cat-title">Infra & Cloud</div>
-                <div class="skill-tags"><span class="tag">Docker</span><span class="tag">Kubernetes</span><span class="tag">Prometheus</span><span class="tag">Grafana</span><span class="tag">Terraform</span><span class="tag">AWS</span><span class="tag">Azure</span></div>
-            </div>
-        </div>
-    </section>
-
+    <!-- Academic Projects Layout Section -->
     <section id="projects">
         <h2 class="section-title">// ACADEMIC PROJECTS</h2>
-        
         <div class="projects-grid" id="projectsGrid"></div>
     </section>
-
-    <section id="certifications">
-        <h2 class="section-title">// COMPREHENSIVE CERTIFICATIONS & CREDENTIALS</h2>
-        <div class="cert-list">
-            <div class="cert-item">
-                <div class="cert-name">Novel Prediction System for Stock Market - HCBC</div>
-                <div class="cert-meta">IEEE Xplore • Published Research Paper</div>
-                <div class="badge-verified">✓ Published Record</div>
-            </div>
-            <div class="cert-item">
-                <div class="cert-name">SYSTIMAX Installation & Maintenance (I&M)</div>
-                <div class="cert-meta">CommScope / BICSI Certification • Valid to May 2029</div>
-                <div class="badge-verified">✓ Active Badge</div>
-            </div>
-            <div class="cert-item">
-                <div class="cert-name">AWS Certified Cloud Practitioner</div>
-                <div class="cert-meta">Amazon Web Services (AWS)</div>
-                <div class="badge-verified">✓ Verified</div>
-            </div>
-            <div class="cert-item">
-                <div class="cert-name">CCSP: Data Center Design & Risk Analysis</div>
-                <div class="cert-meta">Skillsoft Industry Certification</div>
-                <div class="badge-verified">✓ Complete</div>
-            </div>
-            <div class="cert-item">
-                <div class="cert-name">CCNA 2020: IPv4 Subnetting & Addressing</div>
-                <div class="cert-meta">Cisco Systems Aligned Training</div>
-                <div class="badge-verified">✓ Verified</div>
-            </div>
-            <div class="cert-item">
-                <div class="cert-name">CCNA 2020: Network Topology Architectures</div>
-                <div class="cert-meta">Cisco Systems Aligned Training</div>
-                <div class="badge-verified">✓ Verified</div>
-            </div>
-            <div class="cert-item">
-                <div class="cert-name">LLM Security & Threat Modeling</div>
-                <div class="cert-meta">Securing AI Production Architectures Series</div>
-                <div class="badge-verified">✓ Complete</div>
-            </div>
-            <div class="cert-item">
-                <div class="cert-name">AI Governance, Ethics, & Compliance</div>
-                <div class="cert-meta">Skillsoft Compliance Structures</div>
-                <div class="badge-verified">✓ Complete</div>
-            </div>
-        </div>
-    </section>
-
-    <section id="education">
-        <h2 class="section-title">// ACADEMIC HISTORY</h2>
-        <div class="exp-card">
-            <div class="exp-header">
-                <span class="job-title">M.S., Data Science</span>
-                <span class="company-time">University of Massachusetts Dartmouth [GPA 3.5/4.0]</span>
-            </div>
-            <p style="color: var(--text-dim); font-size: 0.95rem;">Database Design, Advanced Machine Learning, High-Performance Scientific Computing, Advanced Mathematical Statistics, Network Security.</p>
-        </div>
-    </section>
-
-    <footer>
-        <span>© 2026 Mokesh Balakrishnan. Fully deployed public node.</span>
-        <span style="color: var(--accent-green);">build status: passing</span>
-    </footer>
 
 </div>
 
