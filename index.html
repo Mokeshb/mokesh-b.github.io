@@ -1,168 +1,643 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Academic Projects</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mokesh Balakrishnan — AI Infrastructure Engineer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #060913;
+    --panel: rgba(15, 22, 42, 0.65);
+    --panel-hover: rgba(23, 33, 61, 0.85);
+    --panel-2: rgba(30, 41, 73, 0.5);
+    --border: rgba(56, 189, 248, 0.15);
+    --border-hover: rgba(0, 240, 255, 0.4);
+    --text: #f8fafc;
+    --text-dim: #94a3b8;
+    --text-faint: #475569;
+    --accent: #00f0ff;
+    --accent-purple: #7000ff;
+    --accent-soft: rgba(0, 240, 255, 0.06);
+    --green: #00f5a0;
+    --green-soft: rgba(0, 245, 160, 0.1);
+    --red: #ff4a6b;
+    --font-display: 'Space Grotesk', sans-serif;
+    --font-body: 'Inter', sans-serif;
+    --font-mono: 'IBM Plex Mono', monospace;
+  }
 
-    <style>
-        :root {
-            --bg: #0b0f19;
-            --panel: #131a2c;
-            --border: #222f4d;
-            --text: #e2e8f0;
-            --text-dim: #94a3b8;
-            --accent: #38bdf8;
-            --font-display: 'Space Grotesk', sans-serif;
-            --font-body: 'Inter', sans-serif;
-            --font-mono: 'IBM Plex Mono', monospace;
-        }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font-body);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    background-image: 
+      linear-gradient(rgba(56, 189, 248, 0.02) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(56, 189, 248, 0.02) 1px, transparent 1px),
+      radial-gradient(circle at 80% 10%, rgba(112, 0, 255, 0.15), transparent 45%),
+      radial-gradient(circle at 10% 60%, rgba(0, 240, 255, 0.1), transparent 40%);
+    background-size: 40px 40px, 40px 40px, 100% 100%, 100% 100%;
+  }
 
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-        body {
-            background-color: var(--bg);
-            color: var(--text);
-            font-family: var(--font-body);
-            line-height: 1.6;
-            padding: 2rem 1rem;
-        }
+  a { color: var(--accent); text-decoration: none; transition: color 0.2s ease; }
+  a:hover { color: #fff; text-shadow: 0 0 8px var(--accent); }
+  :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
 
-        .container {
-            max-width: 1000px;
-            margin: 0 auto;
-        }
+  .wrap { max-width: 1050px; margin: 0 auto; padding: 0 24px; }
 
-        section { margin-bottom: 3.5rem; }
+  /* ---- Status bar ---- */
+  .statusbar {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(6, 9, 19, 0.8);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+  }
+  .statusbar .wrap {
+    display: flex; align-items: center; justify-content: space-between;
+    height: 50px; font-family: var(--font-mono); font-size: 13px; color: var(--text-dim);
+  }
+  .statusbar .left { display: flex; align-items: center; gap: 12px; }
+  .dot { 
+    width: 8px; height: 8px; border-radius: 50%; background: var(--green); 
+    box-shadow: 0 0 10px var(--green); animation: pulse 2s infinite; 
+  }
+  @keyframes pulse {
+    0% { box-shadow: 0 0 0 0 rgba(0, 245, 160, 0.7); }
+    70% { box-shadow: 0 0 0 8px rgba(0, 245, 160, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(0, 245, 160, 0); }
+  }
+  .statusbar .right { display: flex; gap: 20px; }
+  .statusbar .right span.label { color: var(--text-faint); }
+  @media (max-width: 560px) { .statusbar .right .clock { display: none; } }
 
-        .section-title {
-            font-family: var(--font-display);
-            font-size: 1.5rem;
-            color: #fff;
-            margin-bottom: 1.5rem;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
+  /* ---- Main Grid Scaffold ---- */
+  .main-layout {
+    display: grid;
+    grid-template-columns: 320px 1fr;
+    gap: 48px;
+    padding: 60px 0;
+  }
+  @media (max-width: 900px) {
+    .main-layout { grid-template-columns: 1fr; gap: 32px; padding: 24px 0; }
+  }
 
-        .section-title::after {
-            content: '';
-            flex: 1;
-            height: 1px;
-            background: var(--border);
-        }
+  .sidebar-nav { position: sticky; top: 90px; height: fit-content; }
+  @media (max-width: 900px) { .sidebar-nav { position: relative; top: 0; } }
 
-        /* Projects Grid */
-        .projects-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 1.25rem;
-        }
+  /* ---- Section scaffolding ---- */
+  section { padding: 40px 0 20px; scroll-margin-top: 80px; }
+  .tag-label {
+    font-family: var(--font-mono); font-size: 13px; letter-spacing: .08em;
+    color: var(--accent); text-transform: uppercase; display: flex; align-items: center; gap: 12px;
+    margin-bottom: 24px; font-weight: 600;
+  }
+  .tag-label::before { content: "//"; color: var(--accent-purple); }
+  .tag-label::after { content: ""; flex: 1; height: 1px; background: linear-gradient(90deg, var(--border), transparent); }
 
-        .project-card {
-            background: var(--panel);
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            padding: 1.5rem;
-            transition: all 0.2s ease;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-        }
+  h1, h2, h3 { font-family: var(--font-display); font-weight: 700; letter-spacing: -0.02em; }
 
-        .project-card:hover {
-            border-color: var(--accent);
-            transform: translateY(-3px);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
-        }
+  /* ---- Hero ---- */
+  .hero .prompt {
+    font-family: var(--font-mono); color: var(--text-dim); font-size: 14px; margin-bottom: 16px;
+  }
+  .hero .prompt .sym { color: var(--accent); }
+  .hero h1 { font-size: clamp(2.5rem, 6vw, 3.8rem); line-height: 1.05; color: #fff; margin-bottom: 16px; }
+  .hero .role {
+    font-family: var(--font-mono); color: #fff; background: linear-gradient(90deg, var(--accent), var(--accent-purple));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    font-size: 17px; font-weight: 600; letter-spacing: .02em;
+  }
+  .hero .tagline {
+    margin-top: 24px; color: var(--text-dim); font-size: 16.5px; line-height: 1.6;
+  }
+  .hero .links { display: flex; flex-direction: column; gap: 12px; margin-top: 32px; }
+  
+  .btn {
+    font-family: var(--font-mono); font-size: 13.5px; padding: 12px 18px; border-radius: 8px;
+    border: 1px solid var(--border); color: var(--text); display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+    background: rgba(15, 22, 42, 0.4); backdrop-filter: blur(4px);
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .btn:hover {
+    border-color: var(--accent); color: var(--accent); background: var(--accent-soft);
+    box-shadow: 0 0 15px rgba(0, 240, 255, 0.15); transform: translateY(-2px);
+  }
+  .btn.primary {
+    background: linear-gradient(135deg, rgba(0, 240, 255, 0.15), rgba(112, 0, 255, 0.15));
+    border-color: rgba(0, 240, 255, 0.4); color: #fff;
+  }
+  .btn.primary:hover { border-color: var(--accent); box-shadow: 0 0 20px rgba(0, 240, 255, 0.25); }
 
-        .proj-name { font-size: 1.15rem; font-weight: 600; color: #fff; margin-bottom: 0.3rem; }
-        .proj-tech { font-family: var(--font-mono); font-size: 0.8rem; color: var(--accent); margin-bottom: 0.75rem; }
-        .proj-desc { color: var(--text-dim); font-size: 0.9rem; line-height: 1.4; }
-    </style>
+  /* ---- About ---- */
+  .about p { color: var(--text-dim); font-size: 16px; line-height: 1.7; }
+  .about p + p { margin-top: 16px; }
+  .about strong { color: #fff; font-weight: 600; }
+
+  /* ---- Experience (Timeline Logs) ---- */
+  .experience-timeline { margin-top: 8px; }
+  .log-entry {
+    border-left: 2px solid var(--border); padding: 0 0 36px 28px; position: relative;
+    transition: border-color 0.3s;
+  }
+  .log-entry:hover { border-color: var(--accent); }
+  .log-entry:last-child { padding-bottom: 8px; }
+  .log-entry::before {
+    content: ""; position: absolute; left: -6px; top: 6px; width: 10px; height: 10px; border-radius: 50%;
+    background: var(--bg); border: 2px solid var(--accent); transition: all 0.3s;
+  }
+  .log-entry:hover::before { background: var(--accent); box-shadow: 0 0 10px var(--accent); }
+  
+  .log-entry .meta { font-family: var(--font-mono); font-size: 13px; color: var(--accent); font-weight: 500; }
+  .log-entry h3 { font-size: 20px; color: #fff; margin-top: 6px; }
+  .log-entry .org { color: var(--text-dim); font-size: 15px; margin-top: 2px; font-weight: 500; }
+  .log-entry .org .dim { color: var(--text-faint); font-family: var(--font-mono); font-size: 13px; }
+  .log-entry ul { margin-top: 14px; padding-left: 18px; color: var(--text-dim); font-size: 15px; }
+  .log-entry li { margin-bottom: 8px; line-height: 1.6; }
+  .log-entry li::marker { color: var(--accent-purple); }
+
+  /* ---- Skills Matrix Layout ---- */
+  .skills-grid { display: grid; grid-template-columns: 1fr; gap: 16px; }
+  .skill-group { 
+    background: var(--panel); border: 1px solid var(--border); border-radius: 12px; padding: 18px;
+    transition: all 0.25s ease;
+  }
+  .skill-group:hover { border-color: var(--border-hover); background: var(--panel-hover); transform: translateX(4px); }
+  .skill-group .k {
+    font-family: var(--font-mono); font-size: 11.5px; color: var(--accent); text-transform: uppercase;
+    letter-spacing: .08em; display: block; margin-bottom: 12px; font-weight: 600;
+  }
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; }
+  .chip {
+    font-family: var(--font-mono); font-size: 13px; padding: 6px 12px; border-radius: 6px;
+    background: var(--panel-2); border: 1px solid rgba(255,255,255,0.05); color: #e2e8f0;
+  }
+
+  /* ---- Signature Badge Rack Component ---- */
+  .rack {
+    background: var(--panel); border: 1px solid var(--border); border-radius: 14px; padding: 24px;
+    backdrop-filter: blur(8px);
+  }
+  .rack-row { margin-bottom: 24px; }
+  .badge {
+    background: linear-gradient(135deg, rgba(15, 22, 42, 0.8), rgba(30, 41, 73, 0.4));
+    border: 1px solid var(--border-hover); border-radius: 10px; padding: 20px;
+    display: flex; align-items: center; gap: 16px; transition: transform 0.2s;
+  }
+  .badge:hover { transform: scale(1.01); }
+  .led { width: 10px; height: 10px; border-radius: 50%; flex: 0 0 auto; }
+  .led.on { background: var(--green); box-shadow: 0 0 12px var(--green); }
+  .led.off { background: #334155; box-shadow: none; }
+  
+  .badge .body { flex: 1; min-width: 0; }
+  .badge .title { font-size: 16px; color: #fff; font-weight: 600; }
+  .badge .issuer { font-family: var(--font-mono); font-size: 12.5px; color: var(--text-dim); margin-top: 4px; }
+  .badge .verify {
+    font-family: var(--font-mono); font-size: 12px; white-space: nowrap; padding: 6px 12px; border-radius: 6px;
+    font-weight: 500; transition: all 0.2s;
+  }
+  .badge .verify.yes { color: var(--green); border: 1px solid rgba(0, 245, 160, 0.3); background: var(--green-soft); }
+  .badge .verify.yes:hover { background: rgba(0, 245, 160, 0.2); box-shadow: 0 0 10px rgba(0, 245, 160, 0.2); }
+
+  .cert-category { margin-bottom: 28px; }
+  .cert-category:last-child { margin-bottom: 0; }
+  .cat-label {
+    font-family: var(--font-mono); font-size: 12px; color: var(--text-dim); text-transform: uppercase;
+    letter-spacing: .05em; margin-bottom: 14px; display: flex; justify-content: space-between;
+    border-bottom: 1px dashed rgba(255,255,255,0.1); padding-bottom: 6px;
+  }
+  .cat-label .count { color: var(--accent); font-weight: 600; }
+  
+  .badge-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  @media (max-width: 640px) { .badge-grid { grid-template-columns: 1fr; } }
+  
+  .badge-chip {
+    background: var(--panel-2); border: 1px solid rgba(255,255,255,0.03); border-radius: 8px;
+    padding: 14px; display: flex; gap: 12px; align-items: flex-start;
+    transition: all 0.2s ease;
+  }
+  .badge-chip:hover { border-color: var(--border); background: rgba(30, 41, 73, 0.7); transform: translateY(-1px); }
+  .badge-chip .led { margin-top: 5px; width: 8px; height: 8px; }
+  .badge-chip .title { font-size: 14px; color: #fff; font-weight: 500; line-height: 1.4; }
+  .badge-chip .meta { font-family: var(--font-mono); font-size: 11px; color: var(--text-dim); margin-top: 4px; }
+  .rack-note { font-family: var(--font-mono); font-size: 12px; color: var(--text-faint); margin-top: 18px; text-align: center; }
+
+  /* ---- Card Architectures (Projects & Education) ---- */
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  @media (max-width: 760px) { .grid-2 { grid-template-columns: 1fr; } }
+
+  .card {
+    background: var(--panel); border: 1px solid var(--border); border-radius: 12px; padding: 24px;
+    display: flex; flex-direction: column; justify-content: space-between;
+    position: relative; overflow: hidden; transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .card::before {
+    content: ""; position: absolute; top: 0; left: 0; width: 100%; height: 3px;
+    background: linear-gradient(90deg, transparent, var(--accent), transparent);
+    transform: translateX(-100%); transition: transform 0.4s ease;
+  }
+  .card:hover::before { transform: translateX(100%); }
+  .card:hover {
+    border-color: var(--border-hover); background: var(--panel-hover);
+    transform: translateY(-4px); box-shadow: 0 12px 24px rgba(0, 240, 255, 0.08);
+  }
+  .card h3 { font-size: 18px; color: #fff; font-weight: 600; display: flex; justify-content: space-between; align-items: flex-start; gap: 8px; }
+  .card h3 a { flex-shrink: 0; }
+  .card .sub { font-family: var(--font-mono); font-size: 12.5px; color: var(--accent); margin-top: 6px; font-weight: 500; }
+  .card p { color: var(--text-dim); font-size: 14.5px; margin-top: 12px; line-height: 1.6; }
+
+  /* ---- Footer ---- */
+  footer { padding: 80px 0 100px; text-align: center; position: relative; }
+  footer .line { 
+    height: 1px; background: linear-gradient(90deg, transparent, var(--border), transparent); margin-bottom: 40px; 
+  }
+  footer h2 { font-size: 2.2rem; color: #fff; font-family: var(--font-display); }
+  footer p { color: var(--text-dim); margin-top: 12px; font-size: 16px; }
+  footer .links { display: flex; justify-content: center; gap: 16px; margin-top: 32px; flex-wrap: wrap; }
+  footer .copyright { margin-top: 60px; font-family: var(--font-mono); font-size: 12px; color: var(--text-faint); }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { animation: none !important; transition: none !important; transform: none !important; }
+  }
+</style>
 </head>
 <body>
 
-<div class="container">
+  <div class="statusbar">
+    <div class="wrap">
+      <div class="left">
+        <span class="dot"></span>
+        <span style="color:#fff; font-weight:500;">mokesh-balakrishnan</span>
+        <span class="label">::</span>
+        <span style="color: var(--green);">SYS_STATUS_ACTIVE</span>
+      </div>
+      <div class="right">
+        <span class="clock"><span class="label">UPTIME LOG // </span><span id="uptime" style="color:#fff;">—</span></span>
+      </div>
+    </div>
+  </div>
 
-    <!-- Academic Projects Layout Section -->
-    <section id="projects">
-        <h2 class="section-title">// ACADEMIC PROJECTS</h2>
-        <div class="projects-grid" id="projectsGrid"></div>
-    </section>
+  <div class="wrap">
+    <div class="main-layout">
 
-</div>
+      <aside class="sidebar-nav">
+        <div class="hero">
+          <div class="prompt"><span class="sym">#</span> terminal.init()</div>
+          <h1>Mokesh Balakrishnan</h1>
+          <div class="role">AI Infrastructure Engineer</div>
+          <div style="font-family: var(--font-mono); color: var(--text-dim); font-size:12px; margin-top:4px;">Data Center Ops × Applied ML</div>
+          <p class="tagline">
+            Optimizing the exact intersection sweet spot where heavy high-density compute hardware infrastructure and scalable automated machine learning deployment pipelines execute.
+          </p>
+          <div class="links">
+            <a class="btn primary" href="mailto:mokeshb12@gmail.com">📥 mokeshb12@gmail.com</a>
+            <a class="btn" href="tel:5088632290">📞 508-863-2290</a>
+            <a class="btn" href="https://www.linkedin.com/in/mokesh-b-75826b3b7/" target="_blank" rel="noopener">LinkNode.connect() ↗</a>
+          </div>
+        </div>
+      </aside>
+
+      <main>
+        
+        <section id="about" class="about">
+          <div class="tag-label">profile_manifest</div>
+          <p>
+            My industrial background splits cleanly down the middle into two engineering disciplines that are increasingly executing as the same operational stack.
+            On the physical floor environment, I build and maintain rack layouts, clean structured cabling matrices, high density cooling profiles, and systematic automated incident controls.
+          </p>
+          <p>
+            Up in the logical layer, I built an advanced academic <strong>Master's in Data Science</strong> stack over an engineered computer science foundation—processing heavy machine learning arrays, predictive structures, deep validation grids, and optimized architectures. 
+          </p>
+        </section>
+
+        <section id="experience" class="experience">
+          <div class="tag-label">infrastructure_experience.log</div>
+          <div class="experience-timeline">
+            
+            <div class="log-entry">
+              <div class="meta">[ 2026-05 → PRESENT ]</div>
+              <h3>AI Infrastructure Engineer</h3>
+              <div class="org">Black Box <span class="dim">// Full-time Cluster Operations</span></div>
+              <ul>
+                <li>Support and maintain infrastructure for compute clusters, including GPU-based systems, used for AI/ML workloads, ensuring high availability and performance.</li>
+                <li>Perform installation, configuration, and troubleshooting of server, network, and power/cooling systems supporting AI and data-intensive applications.</li>
+                <li>Monitor system health metrics (power draw, temperature, utilization) and respond to incidents to minimize downtime across compute infrastructure.</li>
+                <li>Collaborate with engineering and operations teams on infrastructure changes and capacity planning to support growing AI compute demand.</li>
+              </ul>
+            </div>
+
+            <div class="log-entry">
+              <div class="meta">[ 2024-05 → 2026-04 ]</div>
+              <h3>Data Engineer</h3>
+              <div class="org">Community Dreams Foundation <span class="dim">// Infrastructure Architecture</span></div>
+              <ul>
+                <li>Designed and maintained data pipelines in Python and SQL to ingest, clean, and transform data for downstream reporting and analysis.</li>
+                <li>Built and optimized database queries and structures to support efficient, scalable data storage and retrieval.</li>
+                <li>Automated recurring data processing tasks, improving pipeline reliability and reducing manual effort.</li>
+                <li>Partnered with stakeholders to translate data requirements into engineering solutions supporting organizational reporting needs.</li>
+              </ul>
+            </div>
+
+            <div class="log-entry">
+              <div class="meta">[ 2022-05 → 2023-07 ]</div>
+              <h3>Data Analyst</h3>
+              <div class="org">Accenture <span class="dim">// Enterprise Systems India</span></div>
+              <ul>
+                <li>Analyzed large datasets using SQL and Python to identify trends and support business decision-making.</li>
+                <li>Built dashboards and reports in Excel/Tableau to communicate insights and key metrics to stakeholders.</li>
+                <li>Performed data cleaning, validation, and quality checks to ensure accuracy of analytics outputs feeding downstream reporting and models.</li>
+                <li>Partnered with cross-functional teams to gather requirements and deliver data-driven recommendations.</li>
+              </ul>
+            </div>
+
+          </div>
+        </section>
+
+        <section id="skills" class="skills">
+          <div class="tag-label">technological_skills_matrix</div>
+          <div class="skills-grid">
+            <div class="skill-group">
+              <span class="k">01 / Languages</span>
+              <div class="chips">
+                <span class="chip">Python</span><span class="chip">SQL</span><span class="chip">MATLAB</span><span class="chip">C</span><span class="chip">C++</span>
+              </div>
+            </div>
+            <div class="skill-group">
+              <span class="k">02 / ML Frameworks & Compute</span>
+              <div class="chips">
+                <span class="chip">CUDA</span><span class="chip">PyTorch</span><span class="chip">TensorFlow</span><span class="chip">Keras</span><span class="chip">NumPy</span><span class="chip">Scikit-Learn</span><span class="chip">SciPy</span><span class="chip">Pandas</span>
+              </div>
+            </div>
+            <div class="skill-group">
+              <span class="k">03 / Compute Orchestration & Cloud</span>
+              <div class="chips">
+                <span class="chip">Docker</span><span class="chip">Kubernetes</span><span class="chip">Terraform</span><span class="chip">AWS</span><span class="chip">Azure</span><span class="chip">GCP</span><span class="chip">Jenkins</span><span class="chip">GitHub Actions</span><span class="chip">Prometheus</span><span class="chip">Grafana</span>
+              </div>
+            </div>
+            <div class="skill-group">
+              <span class="k">04 / Distributed Systems & Big Data</span>
+              <div class="chips">
+                <span class="chip">MLflow</span><span class="chip">Kubeflow</span><span class="chip">Apache Airflow</span><span class="chip">Apache Spark</span><span class="chip">Weights & Biases</span>
+              </div>
+            </div>
+            <div class="skill-group">
+              <span class="k">05 / Hardware & Core Data Center Ops</span>
+              <div class="chips">
+                <span class="chip">Rack & Cable Mgmt</span><span class="chip">PDU/UPS Systems</span><span class="chip">KVM/IPMI Fabric</span><span class="chip">Dell PowerEdge</span><span class="chip">HPE ProLiant</span><span class="chip">Cisco Unified Compute</span>
+              </div>
+            </div>
+            <div class="skill-group">
+              <span class="k">06 / L2/L3 Networking & Security Systems</span>
+              <div class="chips">
+                <span class="chip">Network Security</span><span class="chip">Firewall Arrays</span><span class="chip">IPSec VPNs</span><span class="chip">IAM Policies</span><span class="chip">TCP/IP Suite</span><span class="chip">DNS Fabric</span><span class="chip">Load Balancing Layers</span>
+              </div>
+            </div>
+            <div class="skill-group">
+              <span class="k">07 / Storage Engine Systems</span>
+              <div class="chips">
+                <span class="chip">PostgreSQL</span><span class="chip">MySQL</span><span class="chip">MongoDB</span><span class="chip">Linux Kernel</span><span class="chip">Bash Scripting</span><span class="chip">Ansible Automation</span><span class="chip">VMware ESXi</span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="certs" class="certs">
+          <div class="tag-label">verifiable_credential_rack</div>
+          <div class="rack">
+
+            <div class="rack-row">
+              <div class="badge">
+                <span class="led on"></span>
+                <div class="body">
+                  <div class="title">Novel Prediction System for Stock Market — HCBC</div>
+                  <div class="issuer">IEEE Xplore Academic Indexing · Peer-Reviewed Publication</div>
+                </div>
+                <a class="verify yes" href="https://ieeexplore.ieee.org/document/10099547" target="_blank" rel="noopener">DOCUMENT ↗</a>
+              </div>
+            </div>
+
+            <div class="cert-category">
+              <div class="cat-label"><span>Layer 1 Structural Infrastructure</span> <span class="count">CommScope / BICSI · 7</span></div>
+              <div class="badge-grid">
+                <div class="badge-chip"><span class="led on"></span><div><div class="title">SYSTIMAX Installation & Maintenance (I&M)</div><div class="meta">Valid → 29 May 2029</div></div></div>
+                <div class="badge-chip"><span class="led on"></span><div><div class="title">Structured Cabling System (SCS) Fundamentals</div><div class="meta">Valid → 1 Jun 2029</div></div></div>
+                <div class="badge-chip"><span class="led on"></span><div><div class="title">Pre-Terminated Data Center Solutions</div><div class="meta">Valid → 3 Jun 2029</div></div></div>
+                <div class="badge-chip"><span class="led on"></span><div><div class="title">Data Center Cabling Installation</div><div class="meta">Valid → 6 Jun 2029</div></div></div>
+                <div class="badge-chip"><span class="led on"></span><div><div class="title">Installing Premises Cabling Systems (ACT I)</div><div class="meta">Valid → 5 Jun 2029</div></div></div>
+                <div class="badge-chip"><span class="led on"></span><div><div class="title">Certifying & Troubleshooting Premises (ACT II)</div><div class="meta">Valid → 7 Jun 2029</div></div></div>
+                <div class="badge-chip"><span class="led on"></span><div><div class="title">SP3801 — Installing Premises Cabling</div><div class="meta">In Progress · Active Seat</div></div></div>
+              </div>
+            </div>
+
+            <div class="cert-category">
+              <div class="cat-label"><span>Data Center Topologies & Systems</span> <span class="count">Skillsoft Enterprise · 4</span></div>
+              <div class="badge-grid">
+                <div class="badge-chip"><span class="led on"></span><div><div class="title">CCSP 2019: Data Center Security</div><div class="meta">Issued 17 Jun 2026</div></div></div>
+                <div class="badge-chip"><span class="led on"></span><div><div class="title">CCSP 2022: Data Center Design & Risk Analysis</div><div class="meta">Issued 17 Jun 2026</div></div></div>
+                <div class="badge-chip"><span class="led on"></span><div><div class="title">DCCOR: Fibre Channel & Storage Networking</div><div class="meta">Issued 19 Jun 2026</div></div></div>
+                <div class="badge-chip"><span class="led on"></span><div><div class="title">CompTIA Server+: Server Storage</div><div class="meta">Issued 19 Jun 2026</div></div></div>
+              </div>
+            </div>
+
+            <div class="cert-category">
+              <div class="cat-label"><span>L2/L3 Networking Aligned Systems</span> <span class="count">CCNA Architecture Aligned · 7</span></div>
+              <div class="badge-grid">
+                <div class="badge-chip"><span class="led on"></span><div><div class="title">CCNA 2020: IPv4 Subnetting Logic</div><div class="meta">Issued 17 Jun 2026</div></div></div>
+                <div class="badge-chip"><span class="led on"></span><div><div class="title">CCNA 2020: Network Topology Designs</div><div class="meta">Issued 17 Jun 2026</div></div></div>
+                <div class="badge-chip"><span class="led on"></span><div><div class="title">CCNA 2020: IP Addressing Configurations</div><div class="meta">Issued 17 Jun 2026</div></div></div>
+                <div class="badge-chip"><span class="led on"></span><div><div class="title">CCNA 2020: Physical Network Components</div><div class="meta">Issued 16 Jun 2026</div></div></div>
+                <div class="badge-chip"><span class="led on"></span><div><div class="title">Global Networking Standards & Pipelines</div><div class="meta">Issued 16 Jun 2026</div></div></div>
+                <div class="badge-chip"><span class="led on"></span><div><div class="title">Communication and Web Application Protocols</div><div class="meta">Issued 16 Jun 2026</div></div></div>
+                <div class="badge-chip"><span class="led on"></span><div><div class="title">Common TCP/UDP Engineering & Systems</div><div class="meta">Issued 16 Jun 2026</div></div></div>
+              </div>
+            </div>
+
+            <div class="cert-category">
+              <div class="cat-label"><span>Securing AI Production Architectures</span> <span class="count">Securing AI Guild · 8</span></div>
+              <div class="badge-grid">
+                <div class="badge-chip"><span class="led on"></span><div><div class="title">Introduction to LLM Attack Vectors</div><div class="meta">Issued 20 Jun 2026</div></div></div>
+                <div class="badge-chip"><span class="led on"></span><div><div class="title">AI Governance, Ethics, & Model Compliance</div><div class="meta">Issued 20 Jun 2026</div></div></div>
+                <div class="badge-chip"><span class="led on"></span><div><div class="title">Secure Model Deployment & API Defense</div><div class="meta">Issued 20 Jun 2026</div></div></div>
+                <div class="badge-chip"><span class="led on"></span><div><div class="title">Defense-in-Depth Cluster Security Systems</div><div class="meta">Issued 20 Jun 2026</div></div></div>
+                <div class="badge-chip"><span class="led on"></span><div><div class="title">Data, Weights, & Infrastructure Protection</div><div class="meta">Issued 19 Jun 2026</div></div></div>
+                <div class="badge-chip"><span class="led on"></span><div><div class="title">Prompt Injection Mitigations & Guards</div><div class="meta">Issued 19 Jun 2026</div></div></div>
+                <div class="badge-chip"><span class="led on"></span><div><div class="title">LLM Threat Modeling & OWASP Top 10 Aligned</div><div class="meta">Issued 19 Jun 2026</div></div></div>
+                <div class="badge-chip"><span class="led on"></span><div><div class="title">Advanced Model Threats Capstone Project</div><div class="meta">Issued 20 Jun 2026</div></div></div>
+              </div>
+            </div>
+
+            <div class="cert-category">
+              <div class="cat-label"><span>Cloud Provisioning & System Policies</span> <span class="count">Governance Matrices · 2</span></div>
+              <div class="badge-grid">
+                <div class="badge-chip"><span class="led on"></span><div><div class="title">Microsoft Azure Fundamentals: AZ-900</div><div class="meta">Issued 15 Jun 2026</div></div></div>
+                <div class="badge-chip"><span class="led on"></span><div><div class="title">AIGP: AI Intellectual Property & Product Liability</div><div class="meta">Issued 19 Jun 2026</div></div></div>
+              </div>
+            </div>
+
+            <div class="cert-category">
+              <div class="cat-label"><span>AI Process Deployment In Agile</span> <span class="count">Framework Acceleration · 4</span></div>
+              <div class="badge-grid">
+                <div class="badge-chip"><span class="led on"></span><div><div class="title">Intelligent Test Automation & Quality Assurance</div><div class="meta">Issued 23 Jun 2026</div></div></div>
+                <div class="badge-chip"><span class="led on"></span><div><div class="title">Leading AI Transformation in Agile Teams</div><div class="meta">Issued 23 Jun 2026</div></div></div>
+                <div class="badge-chip"><span class="led on"></span><div><div class="title">AI-Enhanced Collaboration & Communication Systems</div><div class="meta">Issued 22 Jun 2026</div></div></div>
+                <div class="badge-chip"><span class="led on"></span><div><div class="title">AI-Powered Sprint Architecture & Capacity Planning</div><div class="meta">Issued 20 Jun 2026</div></div></div>
+              </div>
+            </div>
+
+            <div class="cert-category">
+              <div class="cat-label"><span>Professional Scope & Compliance Transformation</span> <span class="count">Enterprise Management · 10</span></div>
+              <div class="badge-grid">
+                <div class="badge-chip"><span class="led on"></span><div><div class="title">Managing Microsoft Teams: Security & Compliance</div><div class="meta">Issued 16 Jun 2026</div></div></div>
+                <div class="badge-chip"><span class="led on"></span><div><div class="title">Overcoming Systemic Resistance to Structural Change</div><div class="meta">Issued 10 Jun 2026</div></div></div>
+                <div class="badge-chip"><span class="led on"></span><div><div class="title">Viewing the Big Picture Strategically</div><div class="meta">Issued 10 Jun 2026</div></div></div>
+                <div class="badge-chip"><span class="led on"></span><div><div class="title">Leadercamp: Corporate ESG and Sustainability Metrics</div><div class="meta">Issued 10 Jun 2026</div></div></div>
+                <div class="badge-chip"><span class="led on"></span><div><div class="title">Leadercamp: People-Centric Systems Leadership</div><div class="meta">Issued 9 Jun 2026</div></div></div>
+                <div class="badge-chip"><span class="led on"></span><div><div class="title">Talent Framework Development & Operational Transformation</div><div class="meta">Issued 9 Jun 2026</div></div></div>
+                <div class="badge-chip"><span class="led on"></span><div><div class="title">Leadercamp: Leading a Learning Culture Matrix</div><div class="meta">Issued 9 Jun 2026</div></div></div>
+                <div class="badge-chip"><span class="led on"></span><div><div class="title">Staying Current in the Digital-First Workplace Environment</div><div class="meta">Issued 9 Jun 2026</div></div></div>
+                <div class="badge-chip"><span class="led on"></span><div><div class="title">Developing a Mindset of Structural Growth and Learning</div><div class="meta">Issued 9 Jun 2026</div></div></div>
+                <div class="badge-chip"><span class="led on"></span><div><div class="title">Delivering High-Impact Feedback for Infrastructure Alignment</div><div class="meta">Issued 9 Jun 2026</div></div></div>
+              </div>
+            </div>
+
+            <div class="cert-category">
+              <div class="cat-label"><span>Secondary Self-Reported Tokens</span> <span class="count">Auxiliary Units · 3</span></div>
+              <div class="badge-grid">
+                <div class="badge-chip"><span class="led off"></span><div><div class="title">Core Programming Engine Certs (Python, C, C++, SQL)</div><div class="meta">StudySection Validation</div></div></div>
+                <div class="badge-chip"><span class="led off"></span><div><div class="title">Advanced Engineering Workshops (JS, ML, Advanced Big Data, IoT)</div><div class="meta">Institutional Certificates</div></div></div>
+                <div class="badge-chip"><span class="led off"></span><div><div class="title">Official Merit Token — ICSTCEE 2022 Conference</div><div class="meta">Research Recognition</div></div></div>
+              </div>
+            </div>
+
+            <div class="rack-note">● Verified Hardware/Platform Engine Link (Skillsoft / CommScope) &nbsp;&nbsp;○ External/Self-Reported Matrix Unit</div>
+          </div>
+        </section>
+
+        <section id="education" class="education">
+          <div class="tag-label">academic_history</div>
+          <div class="grid-2">
+            <div class="card">
+              <h3>M.S., Data Science</h3>
+              <div class="sub">University of Massachusetts Dartmouth</div>
+              <div style="font-family: var(--font-mono); font-size:12px; color: var(--text-faint); margin-top:2px;">Graduation: Aug 2025 · GPA 3.5 / 4.0</div>
+              <p>Database Structural Design, Advanced Machine Learning Arrays, High-Performance Scientific Computing Pipelines, Network Security Models.</p>
+            </div>
+            <div class="card">
+              <h3>B.Tech, Computer Science</h3>
+              <div class="sub">SRM Institute of Science and Technology, Chennai</div>
+              <div style="font-family: var(--font-mono); font-size:12px; color: var(--text-faint); margin-top:2px;">Graduation: May 2023 · GPA 9.0 / 10</div>
+              <p>Core Data Structures, Unix Operating Systems, Computational Networks, Relational DBMS Architectures, Object-Oriented Structures.</p>
+            </div>
+          </div>
+        </section>
+
+        <section id="projects" class="projects">
+          <div class="tag-label">applied_academic_projects</div>
+          <div class="grid-2">
+
+            <div class="card">
+              <h3>Fake Product Review Monitoring System</h3>
+              <div class="sub">NLP · Anomaly Detection Array</div>
+              <p>Engineered and deployed a pipeline that reduced anomalous/fake reviews across training sets by 40%, securing operational user trust indicators.</p>
+            </div>
+
+            <div class="card">
+              <h3>Hybrid CatBoost Stock Target Model</h3>
+              <div class="sub">Gradient Boosting · Categorical Array Processing</div>
+              <p>Boosted financial stock multi-variable prediction precision performance to 92.99%, optimizing processing through highly volatile market adjustments.</p>
+            </div>
+
+            <div class="card">
+              <h3>Credit Card Fraud Detection Array</h3>
+              <div class="sub">XGBoost Framework · Advanced Analytical Methods</div>
+              <p>Building a live classification system specifically aimed at reducing false-negative processing rates within processing environments.</p>
+            </div>
+
+            <div class="card">
+              <h3>Outlier Detection System</h3>
+              <div class="sub">Isolation Forest × LOF Matrices</div>
+              <p>Deployed a consistent, resilient structural pipeline engineered to discover statistical multidimensional anomalies across streaming architectures.</p>
+            </div>
+
+            <div class="card">
+              <h3>CNN Image Classification Pipeline</h3>
+              <div class="sub">TensorFlow Deep Learning Cluster</div>
+              <p>Built an end-to-end convolutional array structure including convolutional abstraction layers, pooling transformations, and full density connection pipelines.</p>
+            </div>
+
+            <div class="card">
+              <h3>Deep Learning Context Chatbot</h3>
+              <div class="sub">NLP Pipeline Architectures</div>
+              <p>Developed an automated deep language modeling sequence designed to process conversational interactions with contextually mapped references.</p>
+            </div>
+
+            <div class="card">
+              <h3>Drug Recommendation Engine</h3>
+              <div class="sub">ML Structures · Similarity Mapping · <a href="https://github.com/Mokeshb/drug-recommendation" target="_blank" rel="noopener">Repo ↗</a></h3>
+              <p>Built an analytical pipeline processing textual patient records and conditional sets using NLP tokens to recommend valid chemical therapeutics.</p>
+            </div>
+
+            <div class="card">
+              <h3>Automated ETL Infrastructure Pipeline</h3>
+              <div class="sub">Data Pipeline Automation Engineering · <a href="https://github.com/Mokeshb/etl-pipeline" target="_blank" rel="noopener">Repo ↗</a></h3>
+              <p>Designed a systematic automation process parsing raw file inputs, applying complex dimensional transformations, and writing down to target databases.</p>
+            </div>
+
+            <div class="card">
+              <h3>Full-Stack Library Controller System</h3>
+              <div class="sub">MERN Engine Stack Integration · <a href="https://github.com/Mokeshb/Library-System-MERN" target="_blank" rel="noopener">Repo ↗</a></h3>
+              <p>Built a full-stack asynchronous data management node executing index logging, client membership data storage, and automated item tracking workflows.</p>
+            </div>
+
+            <div class="card">
+              <h3>AI Order Routing & Kitchen Pipeline</h3>
+              <div class="sub">AI Automation · Full-Stack Integration · <a href="https://github.com/Mokeshb/ai-orders-kitchen-system" target="_blank" rel="noopener">Repo ↗</a></h3>
+              <p>Developed an automated orchestration array that intakes asynchronous requests, applies smart routing rules, and pipelines data directly to production queues.</p>
+            </div>
+
+          </div>
+        </section>
+
+      </main>
+    </div>
+  </div>
+
+  <footer>
+    <div class="wrap">
+      <div class="line"></div>
+      <h2>Let's connect infrastructure.</h2>
+      <p>Available for technical consultation regarding AI Compute Infrastructure, MLOps Pipelines, and Physical Data Center System Architectures.</p>
+      <div class="links">
+        <a class="btn primary" href="mailto:mokeshb12@gmail.com">Initialize Mail Request</a>
+        <a class="btn" href="https://www.linkedin.com/in/mokesh-b-75826b3b7/" target="_blank" rel="noopener">Secure Handshake ↗</a>
+        <a class="btn" href="tel:5088632290">Direct Dial Link</a>
+      </div>
+      <div class="copyright">© 2026 Mokesh Balakrishnan · Production Cluster Build: <span style="color:var(--green);">PASSING</span></div>
+    </div>
+  </footer>
 
 <script>
-    const projectData = [
-        {
-            name: "Fake Product Review Monitoring System",
-            tech: "NLP • Anomaly Detection • 48-hour build",
-            desc: "Engineered and deployed a system that reduced fake reviews by 40% and bolstered customer trust."
-        },
-        {
-            name: "Hybrid CatBoost Stock Prediction Model",
-            tech: "Gradient Boosting • Categorical Data",
-            desc: "Improved stock prediction accuracy by 92.99%, adapting to market volatility via efficient categorical processing."
-        },
-        {
-            name: "Credit Card Fraud Detection",
-            tech: "XGBoost • Advanced Analytics",
-            desc: "Building a fraud detection system aimed at improving transaction security and prevention accuracy."
-        },
-        {
-            name: "Outlier Detection - Isolation Forest & LOF",
-            tech: "Univariate & Multivariate Analysis",
-            desc: "A consistent, robust analytical approach to outlier detection across single- and multi-variable datasets."
-        },
-        {
-            name: "CNN Image Classification",
-            tech: "TensorFlow",
-            desc: "Built a convolutional neural network pipeline - convolutional, pooling, and fully connected layers for effective image classification."
-        },
-        {
-            name: "Deep Learning Chatbot",
-            tech: "NLP",
-            desc: "Developed a chatbot using deep learning for more natural, contextually relevant conversation."
-        },
-        {
-            name: "Drug Recommendation System",
-            tech: "NLP • Machine Learning",
-            desc: "Built a recommendation tool that analyzes patient reviews and conditions to suggest suitable medications, applying NLP and similarity-based filtering techniques."
-        },
-        {
-            name: "ETL Pipeline",
-            tech: "Data Engineering",
-            desc: "Designed and implemented an ETL pipeline to extract, transform, and load data from multiple sources into a structured data store, automating recurring data processing workflows."
-        },
-        {
-            name: "Library Management System (MERN)",
-            tech: "MongoDB • Express • React • Node.js",
-            desc: "Built a full-stack library management system supporting book cataloging, member management, and borrowing/return tracking."
-        },
-        {
-            name: "AI Orders & Kitchen System",
-            tech: "AI / Full-Stack",
-            desc: "Developed an AI-assisted order and kitchen management system that automates order intake and routing to streamline restaurant kitchen operations."
-        }
-    ];
-
-    // Inject the clean static cards directly into the document grid layout
-    const grid = document.getElementById('projectsGrid');
-    projectData.forEach((p) => {
-        const card = document.createElement('div');
-        card.className = 'project-card';
-        card.innerHTML = `
-            <div>
-                <div class="proj-name">\${p.name}</div>
-                <div class="proj-tech">\${p.tech}</div>
-                <div class="proj-desc">\${p.desc}</div>
-            </div>
-        `;
-        grid.appendChild(card);
-    });
+  // Runtime Uptime Counter Tracking
+  const bootTime = new Date("2022-05-01T00:00:00");
+  const el = document.getElementById('uptime');
+  function pad(n){ return String(n).padStart(2,'0'); }
+  function tick(){
+    const now = new Date();
+    let diff = Math.floor((now - bootTime)/1000);
+    const days = Math.floor(diff/86400); diff -= days*86400;
+    const hours = Math.floor(diff/3600); diff -= hours*3600;
+    const mins = Math.floor(diff/60); diff -= mins*60;
+    const secs = diff;
+    el.textContent = `${days}d ${pad(hours)}:${pad(mins)}:${pad(secs)}`;
+  }
+  tick();
+  setInterval(tick, 1000);
 </script>
 
 </body>
