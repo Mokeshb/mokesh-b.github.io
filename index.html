@@ -1,517 +1,82 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Mokesh Balakrishnan — AI Infrastructure Engineer</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght=500;600;700&family=Inter:wght=400;500;600&family=IBM+Plex+Mono:wght=400;500;600&display=swap" rel="stylesheet">
-<style>
-  :root {
-    --bg: #0B0F14;
-    --panel: #131922;
-    --panel-hover: #19212D;
-    --border: #222C3A;
-    --border-hover: #37465B;
-    --text: #F1F3F5;
-    --text-dim: #9A9FA7;
-    --text-faint: #626B77;
-    --accent: #FFA94D;
-    --accent-glow: rgba(255,169,77,0.15);
-    --green: #3ECF8E;
-    --green-glow: rgba(62,207,142,0.15);
-    --font-display: 'Space Grotesk', sans-serif;
-    --font-body: 'Inter', sans-serif;
-    --font-mono: 'IBM Plex Mono', monospace;
-  }
-
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  html { scroll-behavior: smooth; }
-  
-  body {
-    background: var(--bg);
-    color: var(--text);
-    font-family: var(--font-body);
-    line-height: 1.6;
-    -webkit-font-smoothing: antialiased;
-    background-image: 
-      radial-gradient(circle at 80% 10%, rgba(255,169,77,0.04), transparent 45%),
-      radial-gradient(circle at 15% 60%, rgba(62,207,142,0.03), transparent 50%);
-    background-attachment: fixed;
-  }
-
-  a { color: var(--accent); text-decoration: none; transition: color 0.2s ease; }
-  a:hover { color: #FFC078; text-decoration: none; }
-
-  .wrap { max-width: 900px; margin: 0 auto; padding: 0 28px; }
-
-  /* Navbar / Status Bar */
-  .statusbar {
-    position: sticky; top: 0; z-index: 100;
-    background: rgba(11, 15, 20, 0.8);
-    backdrop-filter: blur(12px);
-    border-bottom: 1px solid var(--border);
-  }
-  .statusbar .wrap {
-    display: flex; align-items: center; justify-content: space-between;
-    height: 52px; font-family: var(--font-mono); font-size: 13px; color: var(--text-dim);
-  }
-  .statusbar .left { display: flex; align-items: center; gap: 10px; }
-  .dot { 
-    width: 8px; height: 8px; border-radius: 50%; background: var(--green); 
-    box-shadow: 0 0 10px var(--green); animation: pulse 2s infinite; 
-  }
-  @keyframes pulse {
-    0% { box-shadow: 0 0 0 0 rgba(62,207,142,0.7); }
-    70% { box-shadow: 0 0 0 8px rgba(62,207,142,0); }
-    100% { box-shadow: 0 0 0 0 rgba(62,207,142,0); }
-  }
-  .clock { font-weight: 500; color: var(--text); }
-  @media (max-width: 560px) { .statusbar .right { display: none; } }
-
-  /* Main Sections */
-  section { padding: 80px 0; }
-  
-  .tag-label {
-    font-family: var(--font-mono); font-size: 13px; letter-spacing: .08em;
-    color: var(--accent); text-transform: uppercase; display: flex; align-items: center; gap: 14px;
-    margin-bottom: 32px;
-  }
-  .tag-label::before { content: "//"; color: var(--text-faint); }
-  .tag-label::after { content: ""; flex: 1; height: 1px; background: var(--border); }
-
-  h1, h2, h3 { font-family: var(--font-display); font-weight: 600; letter-spacing: -0.01em; }
-
-  /* Hero Section */
-  .hero { padding-top: 100px; padding-bottom: 60px; }
-  .hero .prompt { font-family: var(--font-mono); color: var(--text-faint); font-size: 15px; margin-bottom: 16px; }
-  .hero .prompt .sym { color: var(--green); }
-  .hero h1 { font-size: clamp(2.4rem, 6vw, 3.6rem); line-height: 1.1; color: #FFF; font-weight: 700; }
-  .hero .role { font-family: var(--font-mono); color: var(--accent); font-size: 16px; margin-top: 18px; font-weight: 500; }
-  .hero .tagline { margin-top: 24px; max-width: 640px; color: var(--text-dim); font-size: 17.5px; line-height: 1.65; }
-  .hero .links { display: flex; gap: 16px; margin-top: 36px; flex-wrap: wrap; }
-  
-  .btn {
-    font-family: var(--font-mono); font-size: 13.5px; padding: 12px 20px; border-radius: 8px;
-    border: 1px solid var(--border); color: var(--text); display: inline-flex; align-items: center; gap: 10px;
-    background: transparent; transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
-  }
-  .btn:hover { border-color: var(--accent); color: var(--accent); background: var(--accent-glow); transform: translateY(-2px); }
-  .btn.primary { background: var(--accent-glow); border-color: rgba(255,169,77,0.4); color: var(--accent); font-weight: 500; }
-  .btn.primary:hover { background: rgba(255,169,77,0.22); border-color: var(--accent); }
-
-  /* About */
-  .about p { color: var(--text-dim); font-size: 17px; max-width: 720px; line-height: 1.7; }
-  .about p + p { margin-top: 18px; }
-  .about strong { color: #FFF; font-weight: 600; }
-
-  /* Experience Log Timeline */
-  .log-entry { border-left: 2px solid var(--border); padding: 4px 0 36px 28px; position: relative; transition: border-color 0.2s ease; }
-  .log-entry:hover { border-color: var(--accent); }
-  .log-entry:last-child { padding-bottom: 4px; }
-  .log-entry::before {
-    content: ""; position: absolute; left: -6px; top: 8px; width: 10px; height: 10px; border-radius: 50%;
-    background: var(--bg); border: 2px solid var(--accent); transition: background 0.2s ease;
-  }
-  .log-entry:hover::before { background: var(--accent); }
-  .log-entry .meta { font-family: var(--font-mono); font-size: 13px; color: var(--text-faint); font-weight: 500; }
-  .log-entry h3 { font-size: 20px; color: #FFF; margin-top: 6px; }
-  .log-entry .org { color: var(--text-dim); font-size: 15.5px; margin-top: 2px; font-weight: 500; }
-  .log-entry .org .dim { color: var(--text-faint); font-weight: 400; }
-  .log-entry ul { margin-top: 16px; padding-left: 20px; color: var(--text-dim); font-size: 15.5px; }
-  .log-entry li { margin-bottom: 10px; line-height: 1.6; }
-  .log-entry li::marker { color: var(--accent); }
-
-  /* Skills Cloud Layout */
-  .skill-group { margin-bottom: 26px; }
-  .skill-group .k {
-    font-family: var(--font-mono); font-size: 12.5px; color: var(--text-faint); text-transform: uppercase;
-    letter-spacing: .06em; display: block; margin-bottom: 12px;
-  }
-  .chips { display: flex; flex-wrap: wrap; gap: 10px; }
-  .chip {
-    font-family: var(--font-mono); font-size: 13.5px; padding: 7px 14px; border-radius: 6px;
-    background: var(--panel); border: 1px solid var(--border); color: var(--text-dim);
-    transition: all 0.2s ease;
-  }
-  .chip:hover { border-color: var(--text-faint); color: #FFF; transform: scale(1.03); }
-
-  /* Certifications Badge Rack */
-  .rack { background: var(--panel); border: 1px solid var(--border); border-radius: 12px; padding: 24px; }
-  .rack-row { margin-bottom: 24px; }
-  .badge {
-    background: #1A222E; border: 1px solid var(--border); border-radius: 8px; padding: 18px; 
-    display: flex; align-items: center; justify-content: space-between; gap: 16px;
-    transition: all 0.2s ease;
-  }
-  .badge:hover { border-color: var(--green); background: #1E2836; }
-  .badge .body { flex: 1; min-width: 0; }
-  .badge .title { font-size: 15.5px; color: #FFF; font-weight: 600; }
-  .badge .issuer { font-family: var(--font-mono); font-size: 13px; color: var(--text-dim); margin-top: 4px; }
-  .badge .verify { font-family: var(--font-mono); font-size: 12px; font-weight: 500; padding: 6px 12px; border-radius: 6px; }
-  .badge .verify.yes { color: var(--green); border: 1px solid rgba(62,207,142,0.3); background: var(--green-glow); }
-  .badge .verify.yes:hover { background: rgba(62,207,142,0.25); border-color: var(--green); }
-
-  .cert-category { margin-bottom: 28px; }
-  .cert-category:last-child { margin-bottom: 0; }
-  .cat-label { font-family: var(--font-mono); font-size: 12.5px; color: var(--text-dim); text-transform: uppercase; letter-spacing: .05em; margin-bottom: 14px; }
-  .cat-label .count { color: var(--accent); font-weight: 600; }
-  
-  .badge-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-  @media (max-width: 640px) { .badge-grid { grid-template-columns: 1fr; } }
-  
-  .badge-chip {
-    background: #181F2B; border: 1px solid var(--border); border-radius: 8px;
-    padding: 12px 16px; display: flex; gap: 12px; align-items: flex-start;
-    transition: all 0.2s ease;
-  }
-  .badge-chip:hover { border-color: var(--border-hover); background: #1C2433; transform: translateY(-1px); }
-  .badge-chip .led { margin-top: 6px; width: 8px; height: 8px; }
-  .badge-chip .led.on { background: var(--green); box-shadow: 0 0 6px var(--green); }
-  .badge-chip .led.off { background: var(--text-faint); box-shadow: none; }
-  .badge-chip .title { font-size: 14px; color: var(--text); font-weight: 500; line-height: 1.4; }
-  .badge-chip .meta { font-family: var(--font-mono); font-size: 11.5px; color: var(--text-faint); margin-top: 4px; }
-  .rack-note { font-family: var(--font-mono); font-size: 12px; color: var(--text-faint); margin-top: 18px; border-top: 1px solid var(--border); padding-top: 14px; }
-
-  /* Structured Grids for Cards */
-  .edu-grid, .projects-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-  @media (max-width: 640px) { .edu-grid, .projects-grid { grid-template-columns: 1fr; } }
-
-  /* Premium Cards */
-  .card {
-    background: var(--panel); border: 1px solid var(--border); border-radius: 12px; padding: 24px;
-    display: flex; flex-direction: column; justify-content: flex-start; height: 100%;
-    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1); position: relative; overflow: hidden;
-  }
-  .card:hover {
-    background: var(--panel-hover); border-color: var(--border-hover);
-    transform: translateY(-4px); box-shadow: 0 12px 24px rgba(0,0,0,0.25);
-  }
-  .card h3 { font-size: 17px; color: #FFF; font-weight: 600; }
-  .card .sub { font-family: var(--font-mono); font-size: 13px; color: var(--text-faint); margin-top: 6px; }
-  .card p { color: var(--text-dim); font-size: 14.5px; margin-top: 14px; line-height: 1.55; flex-grow: 1; }
-  
-  /* Project links styling inside descriptions */
-  .card .sub a { font-weight: 500; display: inline-flex; align-items: center; gap: 4px; }
-
-  /* Footer Styling */
-  footer { padding: 80px 0 100px; text-align: center; background: #080C10; border-top: 1px solid var(--border); }
-  footer h2 { font-size: 1.8rem; color: #FFF; font-weight: 700; }
-  footer p { color: var(--text-dim); margin-top: 12px; font-size: 16px; }
-  footer .links { display: flex; justify-content: center; gap: 16px; margin-top: 32px; flex-wrap: wrap; }
-  footer .copyright { margin-top: 64px; font-family: var(--font-mono); font-size: 12px; color: var(--text-faint); }
-
-  @media (prefers-reduced-motion: reduce) {
-    * { animation: none !important; transition: none !important; transform: none !important; }
-  }
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mokesh Balakrishnan | AI Infrastructure</title>
+    <style>
+        :root {
+            --bg: #050505; --card: #0c0c0c; --border: #1a1a1a;
+            --text: #ededed; --dim: #888; --accent: #ff9d00;
+            --glass: rgba(255, 255, 255, 0.03);
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; padding: 40px 20px; line-height: 1.5; }
+        .bento-grid { max-width: 1000px; margin: 0 auto; display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; grid-auto-rows: minmax(150px, auto); }
+        
+        .card { background: var(--card); border: 1px solid var(--border); padding: 24px; border-radius: 24px; transition: 0.4s; position: relative; overflow: hidden; }
+        .card:hover { border-color: var(--accent); transform: translateY(-4px); }
+        
+        /* Spans for Bento layout */
+        .span-2 { grid-column: span 2; }
+        .span-4 { grid-column: span 4; }
+        
+        h1 { font-size: 3rem; margin-bottom: 8px; }
+        .accent { color: var(--accent); }
+        .tagline { color: var(--dim); font-size: 1.2rem; margin-bottom: 20px; }
+        
+        .skill-chip { display: inline-block; padding: 6px 12px; background: var(--border); border-radius: 8px; margin: 4px; font-size: 0.85rem; }
+        
+        .nav-link { color: var(--text); text-decoration: none; font-weight: 500; border-bottom: 1px solid var(--border); }
+        .nav-link:hover { color: var(--accent); border-color: var(--accent); }
+    </style>
 </head>
 <body>
 
-  <div class="statusbar">
-    <div class="wrap">
-      <div class="left">
-        <span class="dot"></span>
-        <span>mokesh-balakrishnan</span>
-        <span class="label">·</span>
-        <span>STATUS: ONLINE</span>
-      </div>
-      <div class="right">
-        <span class="clock"><span style="color:var(--text-faint);">UPTIME </span><span id="uptime">—</span></span>
-      </div>
+<div class="bento-grid">
+    <!-- Header Card -->
+    <div class="card span-4">
+        <h1>Mokesh <span class="accent">Balakrishnan</span></h1>
+        <p class="tagline">AI Infrastructure Engineer | Data Center Operations & Applied ML</p>
+        <a href="mailto:mokeshb12@gmail.com" class="nav-link">mokeshb12@gmail.com</a>
     </div>
-  </div>
 
-  <div class="wrap">
-
-    <!-- HERO -->
-    <section class="hero">
-      <div class="prompt"><span class="sym">$</span> whoami</div>
-      <h1>Mokesh Balakrishnan</h1>
-      <div class="role">AI Infrastructure Engineer — Data Center Ops × Applied ML</div>
-      <p class="tagline">
-        I started racking and troubleshooting physical servers, then engineered a master's path in data science. Most specialize in one side of that operational line — I am built for the direct intersection where high-performance compute hardware and machine learning meet.
-      </p>
-      <div class="links">
-        <a class="btn primary" href="mailto:mokeshb12@gmail.com">↳ mokeshb12@gmail.com</a>
-        <a class="btn" href="tel:5088632290">508-863-2290</a>
-        <a class="btn" href="https://www.linkedin.com/in/mokesh-b-75826b3b7/" target="_blank" rel="noopener">LinkedIn ↗</a>
-      </div>
-    </section>
-
-    <!-- ABOUT -->
-    <section class="about">
-      <div class="tag-label">about</div>
-      <p>
-        My expertise acts as a clean bridge between massive processing architecture and applied model dynamics. On the facility floor, I manage physical bare-metal deployments, complex power footprints, network configuration loops, and rapid-response infrastructure incidents. 
-      </p>
-      <p>
-        In the lab environment, I have backed my structural experience with an <strong>M.S. in Data Science</strong>. I thrive on matching specialized cluster fabrics right into optimization parameters for production-scale distributed machine learning systems.
-      </p>
-    </section>
-
-    <!-- EXPERIENCE -->
-    <section class="experience">
-      <div class="tag-label">experience.log</div>
-
-      <div class="log-entry">
-        <div class="meta">[ 2026-05 → PRESENT ]</div>
-        <h3>AI Infrastructure Engineer</h3>
-        <div class="org">Black Box <span class="dim">· Full-time</span></div>
-        <ul>
-          <li>Support and maintain infrastructure for compute clusters, including GPU-based systems, used for AI/ML workloads, ensuring high availability and performance.</li>
-          <li>Perform installation, configuration, and troubleshooting of server, network, and power/cooling systems supporting AI and data-intensive applications.</li>
-          <li>Monitor system health metrics (power draw, temperature, utilization) and respond to incidents to minimize downtime across compute infrastructure.</li>
-          <li>Collaborate with engineering and operations teams on infrastructure changes and capacity planning to support growing AI compute demand.</li>
-        </ul>
-      </div>
-
-      <div class="log-entry">
-        <div class="meta">[ 2024-05 → 2026-04 ]</div>
-        <h3>Data Engineer</h3>
-        <div class="org">Community Dreams Foundation <span class="dim">· Freelance IT</span></div>
-        <ul>
-          <li>Designed and maintained data pipelines in Python and SQL to ingest, clean, and transform data for downstream reporting and analysis.</li>
-          <li>Built and optimized database queries and structures to support efficient, scalable data storage and retrieval.</li>
-          <li>Automated recurring data processing tasks, improving pipeline reliability and reducing manual effort.</li>
-          <li>Partnered with stakeholders to translate data requirements into engineering solutions supporting organizational reporting needs.</li>
-        </ul>
-      </div>
-
-      <div class="log-entry">
-        <div class="meta">[ 2022-05 → 2023-07 ]</div>
-        <h3>Network Engineer Intern</h3>
-        <div class="org">Accenture <span class="dim">· Internship</span></div>
-        <ul>
-          <li>Analyzed large datasets using SQL and Python to identify trends and support business decision-making.</li>
-          <li>Built dashboards and reports in Excel/Tableau to communicate insights and key metrics to stakeholders.</li>
-          <li>Performed data cleaning, validation, and quality checks to ensure accuracy of analytics outputs feeding downstream reporting and models.</li>
-          <li>Partnered with cross-functional teams to gather requirements and deliver data-driven recommendations.</li>
-        </ul>
-      </div>
-    </section>
-
-    <!-- SKILLS -->
-    <section class="skills">
-      <div class="tag-label">skills</div>
-
-      <div class="skill-group">
-        <span class="k">languages</span>
-        <div class="chips">
-          <span class="chip">Python</span><span class="chip">SQL</span><span class="chip">MATLAB</span><span class="chip">C</span><span class="chip">C++</span>
-        </div>
-      </div>
-      <div class="skill-group">
-        <span class="k">ml frameworks</span>
-        <div class="chips">
-          <span class="chip">NumPy</span><span class="chip">PyTorch</span><span class="chip">TensorFlow</span><span class="chip">Keras</span><span class="chip">Scikit-Learn</span><span class="chip">SciPy</span><span class="chip">Pandas</span>
-        </div>
-      </div>
-      <div class="skill-group">
-        <span class="k">infra & cloud</span>
-        <div class="chips">
-          <span class="chip">Docker</span><span class="chip">Kubernetes</span><span class="chip">Terraform</span><span class="chip">AWS</span><span class="chip">Azure</span><span class="chip">GCP</span><span class="chip">Jenkins</span><span class="chip">GitHub Actions</span><span class="chip">Prometheus</span><span class="chip">Grafana</span>
-        </div>
-      </div>
-      <div class="skill-group">
-        <span class="k">mlops & big data</span>
-        <div class="chips">
-          <span class="chip">MLflow</span><span class="chip">Kubeflow</span><span class="chip">Apache Airflow</span><span class="chip">Apache Spark</span><span class="chip">Weights & Biases</span>
-        </div>
-      </div>
-      <div class="skill-group">
-        <span class="k">data center ops</span>
-        <div class="chips">
-          <span class="chip">Rack & Cable Mgmt</span><span class="chip">PDU/UPS</span><span class="chip">KVM/IPMI</span><span class="chip">Dell</span><span class="chip">HPE</span><span class="chip">Cisco</span>
-        </div>
-      </div>
-      <div class="skill-group">
-        <span class="k">security & networking</span>
-        <div class="chips">
-          <span class="chip">Network Security</span><span class="chip">Firewalls</span><span class="chip">VPN</span><span class="chip">IAM</span><span class="chip">TCP/IP</span><span class="chip">DNS</span><span class="chip">Load Balancing</span>
-        </div>
-      </div>
-      <div class="skill-group">
-        <span class="k">databases & systems</span>
-        <div class="chips">
-          <span class="chip">PostgreSQL</span><span class="chip">MySQL</span><span class="chip">MongoDB</span><span class="chip">Linux</span><span class="chip">Bash</span><span class="chip">Ansible</span><span class="chip">VMware</span><span class="chip">CUDA</span>
-        </div>
-      </div>
-    </section>
-
-    <!-- CERTIFICATIONS -->
-    <section class="certs">
-      <div class="tag-label">certifications & badges</div>
-      <div class="rack">
-
-        <div class="rack-row">
-          <div class="badge">
-            <div class="body">
-              <div class="title">Novel Prediction System for Stock Market — HCBC</div>
-              <div class="issuer">IEEE Xplore · Co-authored Research Publication</div>
-            </div>
-            <a class="verify yes" href="https://ieeexplore.ieee.org/document/10099547" target="_blank" rel="noopener">VERIFY RECORD →</a>
-          </div>
-        </div>
-
-        <div class="cert-category">
-          <div class="cat-label">Data Center Cabling & Infrastructure <span class="count">· 7</span></div>
-          <div class="badge-grid">
-            <div class="badge-chip"><span class="led on"></span><div><div class="title">SYSTIMAX Installation & Maintenance (I&M)</div><div class="meta">Valid to 2029</div></div></div>
-            <div class="badge-chip"><span class="led on"></span><div><div class="title">Structured Cabling System (SCS) Fundamentals</div><div class="meta">Valid to 2029</div></div></div>
-            <div class="badge-chip"><span class="led on"></span><div><div class="title">Pre-Terminated Data Center Solutions</div><div class="meta">Valid to 2029</div></div></div>
-            <div class="badge-chip"><span class="led on"></span><div><div class="title">Data Center Cabling Installation</div><div class="meta">Valid to 2029</div></div></div>
-            <div class="badge-chip"><span class="led on"></span><div><div class="title">Installing Premises Cabling Systems (ACT I)</div><div class="meta">Valid to 2029</div></div></div>
-            <div class="badge-chip"><span class="led on"></span><div><div class="title">Certifying & Troubleshooting Premises Cabling Systems (ACT II)</div><div class="meta">Valid to 2029</div></div></div>
-            <div class="badge-chip"><span class="led on"></span><div><div class="title">SP3801 — Installing Premises Cabling Systems (ACT I)</div><div class="meta">Access to Jun 2027</div></div></div>
-          </div>
-        </div>
-
-        <div class="cert-category">
-          <div class="cat-label">Data Center Security & Design <span class="count">· 4</span></div>
-          <div class="badge-grid">
-            <div class="badge-chip"><span class="led on"></span><div><div class="title">CCSP 2019: Data Center Security</div><div class="meta">Issued Jun 2026</div></div></div>
-            <div class="badge-chip"><span class="led on"></span><div><div class="title">CCSP 2022: Data Center Design & Risk Analysis</div><div class="meta">Issued Jun 2026</div></div></div>
-            <div class="badge-chip"><span class="led on"></span><div><div class="title">DCCOR: Fibre Channel & Storage Networking</div><div class="meta">Issued Jun 2026</div></div></div>
-            <div class="badge-chip"><span class="led on"></span><div><div class="title">CompTIA Server+: Server Storage</div><div class="meta">Issued Jun 2026</div></div></div>
-          </div>
-        </div>
-
-        <div class="cert-category">
-          <div class="cat-label">Networking <span class="count">· 7</span></div>
-          <div class="badge-grid">
-            <div class="badge-chip"><span class="led on"></span><div><div class="title">CCNA 2020: IPv4 Subnetting</div><div class="meta">Issued Jun 2026</div></div></div>
-            <div class="badge-chip"><span class="led on"></span><div><div class="title">CCNA 2020: Network Topology Architectures</div><div class="meta">Issued Jun 2026</div></div></div>
-            <div class="badge-chip"><span class="led on"></span><div><div class="title">CCNA 2020: IP Addressing Basics & Configuration</div><div class="meta">Issued Jun 2026</div></div></div>
-            <div class="badge-chip"><span class="led on"></span><div><div class="title">CCNA 2020: Networking Components</div><div class="meta">Issued Jun 2026</div></div></div>
-            <div class="badge-chip"><span class="led on"></span><div><div class="title">Networking Standards and Connections</div><div class="meta">Issued Jun 2026</div></div></div>
-            <div class="badge-chip"><span class="led on"></span><div><div class="title">Communication and Web Protocols</div><div class="meta">Issued Jun 2026</div></div></div>
-            <div class="badge-chip"><span class="led on"></span><div><div class="title">Common TCP and UDP Applications and VoIP</div><div class="meta">Issued Jun 2026</div></div></div>
-          </div>
-        </div>
-
-        <div class="cert-category">
-          <div class="cat-label">AI Security Series <span class="count">· 8</span></div>
-          <div class="badge-grid">
-            <div class="badge-chip"><span class="led on"></span><div><div class="title">Introduction to LLM Security</div><div class="meta">Issued Jun 2026</div></div></div>
-            <div class="badge-chip"><span class="led on"></span><div><div class="title">AI Governance, Ethics, & Compliance</div><div class="meta">Issued Jun 2026</div></div></div>
-            <div class="badge-chip"><span class="led on"></span><div><div class="title">Secure Deployment & API Security</div><div class="meta">Issued Jun 2026</div></div></div>
-            <div class="badge-chip"><span class="led on"></span><div><div class="title">Defense-in-Depth Strategies & Security Tools</div><div class="meta">Issued Jun 2026</div></div></div>
-            <div class="badge-chip"><span class="led on"></span><div><div class="title">Data, Model, & Infrastructure Security</div><div class="meta">Issued Jun 2026</div></div></div>
-            <div class="badge-chip"><span class="led on"></span><div><div class="title">Prompt-Based Attacks and Mitigations</div><div class="meta">Issued Jun 2026</div></div></div>
-            <div class="badge-chip"><span class="led on"></span><div><div class="title">LLM Threat Modeling & OWASP Alignment</div><div class="meta">Issued Jun 2026</div></div></div>
-            <div class="badge-chip"><span class="led on"></span><div><div class="title">Advanced Threats & Future Trends</div><div class="meta">Issued Jun 2026</div></div></div>
-          </div>
-        </div>
-
-        <div class="cert-category">
-          <div class="cat-label">Cloud & Additional <span class="count">· 5</span></div>
-          <div class="badge-grid">
-            <div class="badge-chip"><span class="led on"></span><div><div class="title">AWS Certified Cloud Practitioner</div><div class="meta">AWS Verified</div></div></div>
-            <div class="badge-chip"><span class="led on"></span><div><div class="title">Microsoft Azure Fundamentals</div><div class="meta">Issued Jun 2026</div></div></div>
-            <div class="badge-chip"><span class="led on"></span><div><div class="title">AIGP: AI Intellectual Property & Liability</div><div class="meta">Issued Jun 2026</div></div></div>
-            <div class="badge-chip"><span class="led off"></span><div><div class="title">Python, C, C++, SQL Certifications</div><div class="meta">StudySection</div></div></div>
-            <div class="badge-chip"><span class="led off"></span><div><div class="title">Development Workshop Framework Credentials</div><div class="meta">Self-Reported</div></div></div>
-          </div>
-        </div>
-
-        <div class="rack-note">● Green indicator marks credentials verified via accredited platforms (Skillsoft, Percipio, CommScope BICSI, AWS).</div>
-      </div>
-    </section>
-
-    <!-- EDUCATION -->
-    <section class="education">
-      <div class="tag-label">education</div>
-      <div class="edu-grid">
-        <div class="card">
-          <h3>M.S., Data Science</h3>
-          <div class="sub">University of Massachusetts Dartmouth · GPA 3.5/4.0</div>
-          <p>Advanced Machine Learning, Database Design, High-Performance Scientific Computing, Network Security, Mathematical Statistics.</p>
-        </div>
-        <div class="card">
-          <h3>B.Tech, Computer Science & Engineering</h3>
-          <div class="sub">SRM University, Chennai · GPA 9.0/10</div>
-          <p>Data Structures, Computer Network Systems, Operating Systems, Object-Oriented Software Principles, DBMS.</p>
-        </div>
-      </div>
-    </section>
-
-    <!-- PROJECTS -->
-    <section class="projects">
-      <div class="tag-label">projects</div>
-      <div class="projects-grid">
-
-        <div class="card">
-          <h3>Drug Recommendation Engine</h3>
-          <div class="sub">ML Structures · Similarity Mapping · <a href="https://github.com/Mokeshb/drug-recommendation" target="_blank" rel="noopener">Repo ↗</a></div>
-          <p>Built an analytical pipeline processing textual patient records and conditional sets using NLP tokens to recommend valid chemical therapeutics.</p>
-        </div>
-
-        <div class="card">
-          <h3>Automated ETL Infrastructure Pipeline</h3>
-          <div class="sub">Pipeline Automation · <a href="https://github.com/Mokeshb/etl-pipeline" target="_blank" rel="noopener">Repo ↗</a></div>
-          <p>Designed a systematic automation process parsing raw file inputs, applying complex dimensional transformations, and writing down to target databases.</p>
-        </div>
-
-        <div class="card">
-          <h3>Full-Stack Library Controller System</h3>
-          <div class="sub">MERN Engine Integration · <a href="https://github.com/Mokeshb/Library-System-MERN" target="_blank" rel="noopener">Repo ↗</a></div>
-          <p>Built a full-stack asynchronous data management node executing index logging, client membership data storage, and automated item tracking workflows.</p>
-        </div>
-
-        <div class="card">
-          <h3>AI Order Routing & Kitchen Pipeline</h3>
-          <div class="sub">AI Automation · Full-Stack · <a href="https://github.com/Mokeshb/ai-orders-kitchen-system" target="_blank" rel="noopener">Repo ↗</a></div>
-          <p>Developed an automated orchestration array that intakes asynchronous requests, applies smart routing rules, and pipelines data directly to production queues.</p>
-        </div>
-
-        <div class="card">
-          <h3>Fake Product Review Monitoring System</h3>
-          <div class="sub">NLP · Anomaly Detection</div>
-          <p>Engineered and deployed an evaluation framework that reduced artificial review noise by 40% to bolster marketplace data integrity.</p>
-        </div>
-
-        <div class="card">
-          <h3>Hybrid CatBoost Stock Prediction Model</h3>
-          <div class="sub">Gradient Boosting · Categorical Data</div>
-          <p>Improved predictive targeting arrays up to 92.99% accuracy by adapting to complex, high-volatility financial categorical streams.</p>
-        </div>
-
-      </div>
-    </section>
-
-  </div>
-
-  <footer>
-    <div class="wrap">
-      <h2>Let's talk infrastructure.</h2>
-      <p>Open to AI Infrastructure, MLOps, and Data Center Engineering paths.</p>
-      <div class="links">
-        <a class="btn primary" href="mailto:mokeshb12@gmail.com">Email Cluster</a>
-        <a class="btn" href="https://www.linkedin.com/in/mokesh-b-75826b3b7/" target="_blank" rel="noopener">LinkedIn</a>
-        <a class="btn" href="tel:5088632290">Direct Call</a>
-      </div>
-      <div class="copyright">© 2026 Mokesh Balakrishnan · system_status: nominal</div>
+    <!-- About Card -->
+    <div class="card span-2">
+        <h3>System Overview</h3>
+        <p style="margin-top: 15px;">I bridge the gap between physical Data Center hardware and high-performance Machine Learning. Experienced in bare-metal orchestration, GPU cluster management, and scalable ETL architectures.</p>
     </div>
-  </footer>
 
-<script>
-  const bootTime = new Date("2022-05-01T00:00:00");
-  const el = document.getElementById('uptime');
-  function pad(n){ return String(n).padStart(2,'0'); }
-  function tick(){
-    const now = new Date();
-    let diff = Math.floor((now - bootTime)/1000);
-    const days = Math.floor(diff/86400); diff -= days*86400;
-    const hours = Math.floor(diff/3600); diff -= hours*3600;
-    const mins = Math.floor(diff/60); diff -= mins*60;
-    const secs = diff;
-    el.textContent = `${days}d ${pad(hours)}:${pad(mins)}:${pad(secs)}`;
-  }
-  tick();
-  setInterval(tick, 1000);
-</script>
+    <!-- Skills Card -->
+    <div class="card span-2">
+        <h3>Core Stack</h3>
+        <div style="margin-top: 15px;">
+            <span class="skill-chip">Python</span><span class="skill-chip">PyTorch</span>
+            <span class="skill-chip">Kubernetes</span><span class="skill-chip">Terraform</span>
+            <span class="skill-chip">AWS/GCP</span><span class="skill-chip">SQL</span>
+            <span class="skill-chip">Data Center Ops</span>
+        </div>
+    </div>
+
+    <!-- Project 1 -->
+    <div class="card span-2">
+        <h3>Drug Recommendation Engine</h3>
+        <p>NLP-based analytical pipeline for therapeutic mapping.</p>
+        <a href="https://github.com/Mokeshb/drug-recommendation" class="nav-link" style="display:block; margin-top:15px;">View Repository ↗</a>
+    </div>
+
+    <!-- Project 2 -->
+    <div class="card span-2">
+        <h3>Automated ETL Pipeline</h3>
+        <p>Systematic data parsing, transformation, and database infrastructure.</p>
+        <a href="https://github.com/Mokeshb/etl-pipeline" class="nav-link" style="display:block; margin-top:15px;">View Repository ↗</a>
+    </div>
+
+    <!-- Footer Card -->
+    <div class="card span-4" style="text-align: center; border-style: dashed;">
+        <p>© 2026 Mokesh Balakrishnan. System status: <span class="accent">Nominal</span>.</p>
+    </div>
+</div>
 
 </body>
 </html>
