@@ -50,7 +50,7 @@
   a:hover { color: #fff; text-shadow: 0 0 8px var(--accent); }
   :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
 
-  .wrap { max-width: 1050px; margin: 0 auto; padding: 0 24px; }
+  .wrap { max-width: 1200px; margin: 0 auto; padding: 0 24px; width: 100%; }
 
   /* ---- Status bar ---- */
   .statusbar {
@@ -83,6 +83,7 @@
     grid-template-columns: 320px 1fr;
     gap: 48px;
     padding: 60px 0;
+    width: 100%;
   }
   @media (max-width: 900px) {
     .main-layout { grid-template-columns: 1fr; gap: 32px; padding: 24px 0; }
@@ -91,8 +92,10 @@
   .sidebar-nav { position: sticky; top: 90px; height: fit-content; }
   @media (max-width: 900px) { .sidebar-nav { position: relative; top: 0; } }
 
+  main { min-width: 0; width: 100%; }
+
   /* ---- Section scaffolding ---- */
-  section { padding: 40px 0 20px; scroll-margin-top: 80px; }
+  section { padding: 20px 0 40px; scroll-margin-top: 80px; width: 100%; }
   .tag-label {
     font-family: var(--font-mono); font-size: 13px; letter-spacing: .08em;
     color: var(--accent); text-transform: uppercase; display: flex; align-items: center; gap: 12px;
@@ -108,7 +111,7 @@
     font-family: var(--font-mono); color: var(--text-dim); font-size: 14px; margin-bottom: 16px;
   }
   .hero .prompt .sym { color: var(--accent); }
-  .hero h1 { font-size: clamp(2.5rem, 6vw, 3.8rem); line-height: 1.05; color: #fff; margin-bottom: 16px; }
+  .hero h1 { font-size: clamp(2.2rem, 5vw, 3.2rem); line-height: 1.1; color: #fff; margin-bottom: 16px; }
   .hero .role {
     font-family: var(--font-mono); color: #fff; background: linear-gradient(90deg, var(--accent), var(--accent-purple));
     -webkit-background-clip: text; -webkit-text-fill-color: transparent;
@@ -229,13 +232,14 @@
   .rack-note { font-family: var(--font-mono); font-size: 12px; color: var(--text-faint); margin-top: 18px; text-align: center; }
 
   /* ---- Card Architectures (Projects & Education) ---- */
-  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; width: 100%; }
   @media (max-width: 760px) { .grid-2 { grid-template-columns: 1fr; } }
 
   .card {
     background: var(--panel); border: 1px solid var(--border); border-radius: 12px; padding: 24px;
     display: flex; flex-direction: column; justify-content: space-between;
     position: relative; overflow: hidden; transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    width: 100%;
   }
   .card::before {
     content: ""; position: absolute; top: 0; left: 0; width: 100%; height: 3px;
@@ -253,7 +257,7 @@
   .card p { color: var(--text-dim); font-size: 14.5px; margin-top: 12px; line-height: 1.6; }
 
   /* ---- Footer ---- */
-  footer { padding: 80px 0 100px; text-align: center; position: relative; }
+  footer { padding: 80px 0 100px; text-align: center; position: relative; width: 100%; }
   footer .line { 
     height: 1px; background: linear-gradient(90deg, transparent, var(--border), transparent); margin-bottom: 40px; 
   }
@@ -269,6 +273,7 @@
 </head>
 <body>
 
+  <!-- TOP RUNTIME STATUS BAR -->
   <div class="statusbar">
     <div class="wrap">
       <div class="left">
@@ -286,6 +291,7 @@
   <div class="wrap">
     <div class="main-layout">
 
+      <!-- ASYMMETRIC SIDEBAR NAV & IDENTITY -->
       <aside class="sidebar-nav">
         <div class="hero">
           <div class="prompt"><span class="sym">#</span> terminal.init()</div>
@@ -303,8 +309,10 @@
         </div>
       </aside>
 
+      <!-- MAIN CONTINUOUS STREAM INTERFACE -->
       <main>
         
+        <!-- ABOUT -->
         <section id="about" class="about">
           <div class="tag-label">profile_manifest</div>
           <p>
@@ -316,6 +324,7 @@
           </p>
         </section>
 
+        <!-- EXPERIENCE -->
         <section id="experience" class="experience">
           <div class="tag-label">infrastructure_experience.log</div>
           <div class="experience-timeline">
@@ -359,6 +368,7 @@
           </div>
         </section>
 
+        <!-- SKILLS -->
         <section id="skills" class="skills">
           <div class="tag-label">technological_skills_matrix</div>
           <div class="skills-grid">
@@ -407,6 +417,7 @@
           </div>
         </section>
 
+        <!-- CERTIFICATIONS -->
         <section id="certs" class="certs">
           <div class="tag-label">verifiable_credential_rack</div>
           <div class="rack">
@@ -519,6 +530,7 @@
           </div>
         </section>
 
+        <!-- EDUCATION -->
         <section id="education" class="education">
           <div class="tag-label">academic_history</div>
           <div class="grid-2">
@@ -537,6 +549,7 @@
           </div>
         </section>
 
+        <!-- PROJECTS -->
         <section id="projects" class="projects">
           <div class="tag-label">applied_academic_projects</div>
           <div class="grid-2">
@@ -608,6 +621,7 @@
     </div>
   </div>
 
+  <!-- CONTAINER FOOTER -->
   <footer>
     <div class="wrap">
       <div class="line"></div>
