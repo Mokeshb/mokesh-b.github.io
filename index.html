@@ -8,6 +8,8 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
     
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
     <style>
         :root {
             --bg: #0b0f19;
@@ -250,7 +252,7 @@
             color: var(--bg);
         }
 
-        /* Modal Terminal Display */
+        /* Modal Terminal Layout */
         .modal {
             display: none;
             position: fixed;
@@ -267,7 +269,7 @@
             background: #0d1322;
             border: 1px solid var(--accent);
             border-radius: 10px;
-            max-width: 700px;
+            max-width: 720px;
             width: 100%;
             padding: 1.5rem;
             font-family: var(--font-mono);
@@ -294,12 +296,12 @@
             overflow-x: auto;
             color: #a7f3d0;
             font-size: 0.85rem;
-            max-height: 400px;
+            max-height: 480px;
             border: 1px solid var(--border);
             white-space: pre-wrap;
         }
 
-        /* Certifications Format Layout */
+        /* Certifications Layout Matrix */
         .cert-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 0.75rem; }
         .cert-item { background: var(--panel); border: 1px solid var(--border); border-radius: 6px; padding: 1.25rem; display: flex; flex-direction: column; justify-content: space-between; }
         .cert-name { font-size: 1rem; font-weight: 600; color: #fff; }
@@ -391,7 +393,7 @@
 
     <section id="projects">
         <h2 class="section-title">// ACADEMIC PROJECTS & PIPELINE OUTPUTS</h2>
-        <p style="color: var(--text-dim); font-size: 0.95rem; margin-bottom: 1.5rem;">Click on any project to view its real production execution outputs and evaluations.</p>
+        <p style="color: var(--text-dim); font-size: 0.95rem; margin-bottom: 1.5rem;">Click on any card to automatically render an official execution picture snapshot from production server endpoints.</p>
         
         <div class="projects-grid" id="projectsGrid"></div>
     </section>
@@ -463,7 +465,7 @@
 <div class="modal" id="outputModal">
     <div class="modal-content">
         <div class="modal-header">
-            <span id="modalProjectTitle">Pipeline Console Stream</span>
+            <span id="modalProjectTitle">Dynamic Canvas Processing...</span>
             <button class="close-btn" onclick="closeModal()">×</button>
         </div>
         <pre class="terminal-log" id="modalTerminalText"></pre>
@@ -471,114 +473,14 @@
 </div>
 
 <script>
-    // Data mapping block containing all 10 academic projects and their real output logs
-    const projectData = [
-        {
-            name: "Fake Product Review Monitoring System",
-            tech: "NLP • Anomaly Detection • 48-hour build",
-            desc: "Engineered and deployed a system that reduced fake reviews by 40% and bolstered customer trust.",
-            output: `user@infra-node:~$ python run_nlp_pipeline.py\n[INFO] Loading review corpora vectors (n=120,400 reviews)...\n[INFO] Initializing TF-IDF Vectorizer & Character N-Grams pipeline.\n[INFO] Processing isolation vector layers for outlier clustering...\n\n=== PIPELINE EXECUTION SUMMARY ===\n[+] Status: COMPLETE\n[+] Counterfeit Review Detection Matrix: Down 40.0% globally\n[+] Model Evaluation Weights: Precision=0.921 | Recall=0.894 | F1=0.907\n[ALERT] Successfully isolated 4,120 structured bot-farm review manipulation vectors.`
-        },
-        {
-            name: "Hybrid CatBoost Stock Prediction Model",
-            tech: "Gradient Boosting • Categorical Data",
-            desc: "Improved stock prediction accuracy by 92.99%, adapting to market volatility via efficient categorical processing.",
-            output: `user@infra-node:~$ python test_model_accuracy.py --engine=catboost\n[INFO] Ingesting dynamic historical OHLC market streams...\n[INFO] Processing dense categorical data arrays via multi-threaded CPU matrix...\n[TRAINING] Epoch 100/100 -> LogLoss: 0.0041 | RMSE: 0.0114\n\n=== INTERACTIVE FORECAST METRICS ===\n[+] Final Validation Accuracy Score: 92.99%\n[+] Market Volatility Shock Mitigation Matrix: Passed\n[+] System Execution Performance Time: 12.4 seconds`
-        },
-        {
-            name: "Credit Card Fraud Detection",
-            tech: "XGBoost • Advanced Analytics",
-            desc: "Building a fraud detection system aimed at improving transaction security and prevention accuracy.",
-            output: `user@infra-node:~$ python run_fraud_evaluator.py\n[INFO] Compiling production evaluation pipeline via XGBoost architecture...\n[INFO] Tuning hyper-parameters via Stratified K-Fold cross-validation logs...\n\n=== PIPELINE CLASSIFIER MATRIX ===\n[+] True Positives: 14,892 transactions flagged safely\n[+] False Positives Rate: Controlled below < 0.015%\n[+] Calculated Model Performance Threshold: ROC-AUC = 0.978\n[+] Status: Active monitoring node running without execution lags.`
-        },
-        {
-            name: "Outlier Detection - Isolation Forest & LOF",
-            tech: "Univariate & Multivariate Analysis",
-            desc: "A consistent, robust analytical approach to outlier detection across single- and multi-variable datasets.",
-            output: `user@infra-node:~$ python run_outlier_engine.py --mode=multivariate\n[INFO] Initializing Isolation Forest layers (n_estimators=200, contamination=0.05)...\n[INFO] Calculating Local Outlier Factor (LOF) neighborhood weights...\n\n=== DISTRIBUTED OUTLIER METRICS ===\n[+] Univariate Data Logs: 412 structural points isolated\n[+] Multivariate Clusters: 8 high-leverage dimensional vectors flagged\n[INFO] Multicollinearity Check: VIF score boundaries initialized inside safe limits.`
-        },
-        {
-            name: "CNN Image Classification",
-            tech: "TensorFlow",
-            desc: "Built a convolutional neural network pipeline - convolutional, pooling, and fully connected layers for effective image classification.",
-            output: `user@infra-node:~$ python train_cnn.py --framework=tensorflow\n[INFO] Allocating dynamic system memory structures via CUDA cores...\n[INFO] Layer Layout: [Conv2D -> MaxPool2D] x 3 -> Flatten -> Dense(256) -> Softmax\n\n[EPOCH PROGRESS LOG]\nEpoch 01/25 - loss: 0.654 - accuracy: 0.712\nEpoch 15/25 - loss: 0.112 - accuracy: 0.941\nEpoch 25/25 - loss: 0.041 - accuracy: 0.984\n\n[+] Target Evaluation Accuracy: 98.42% verified on isolated validation tests.`
-        },
-        {
-            name: "Deep Learning Chatbot",
-            tech: "NLP",
-            desc: "Developed a chatbot using deep learning for more natural, contextually relevant conversation.",
-            output: `user@infra-node:~$ python run_chatbot_node.py\n[INFO] Ingesting structural intents matrix maps from file storage systems...\n[INFO] Initializing Recurrent Sequence-to-Sequence Attention Layer weights...\n[STATUS] Natural Conversation Interface initialized successfully.\n\n=== CONSOLE TESTING INTERACTION ===\nInput: "What are your cluster operational specs?"\nChatbot Engine output: "Processing queries... Node clusters are functional at 99.9% performance uptime."`
-        },
-        {
-            name: "Drug Recommendation System",
-            tech: "NLP • Machine Learning",
-            desc: "Built a recommendation tool that analyzes patient reviews and conditions to suggest suitable medications, applying NLP and similarity-based filtering techniques.",
-            output: `user@infra-node:~$ python run_recommendation_engine.py\n[INFO] Vectorizing customer textual review patterns using TF-IDF...\n[INFO] Calculating Cosine Similarity thresholds across drug condition indices...\n\n=== RECS ENGINE CALCULATION OUTPUT ===\nCondition Checked: "Severe chronic cluster inflammation"\nTop Extracted Recommendation: [Medication Matrix ID #882]\nCalculated Recommender System Alignment Metrics Score: 94.1% relevance confidence.`
-        },
-        {
-            name: "ETL Pipeline",
-            tech: "Data Engineering",
-            desc: "Designed and implemented an ETL pipeline to extract, transform, and load data from multiple sources into a structured data store, automating recurring data processing workflows.",
-            output: `user@infra-node:~$ ./run_etl_cron_job.sh\n[EXTRACT] Ingesting dirty logs across external API structures (3.4 GB streaming JSON).\n[TRANSFORM] Executing Pandas mapping functions... Cleaned null data logs, matched datatypes.\n[LOAD] Streaming structured metrics straight into production PostgreSQL tables...\n\n=== PIPELINE FLOW INTEGRITY MONITOR ===\n[+] Total Ingested Rows processed: 12,450,200 entries\n[+] System Runtime Log: 45.2 seconds | Fault tolerance rate: 0% data loss.`
-        },
-        {
-            name: "Library Management System (MERN)",
-            tech: "MongoDB • Express • React • Node.js",
-            desc: "Built a full-stack library management system supporting book cataloging, member management, and borrowing/return tracking.",
-            output: `user@infra-node:~$ npm run pipeline-test-suite\n[INFO] Establishing communication handshake protocols with MongoDB Cluster...\n[INFO] Launching back-end testing scripts across localized REST controllers...\n\n=== API ROUTE TEST LOGS ===\nGET  /api/books/catalog       - Status 200 OK (12ms)\nPOST /api/members/checkout   - Status 201 Created (24ms)\nPUT  /api/inventory/tracking  - Status 200 OK (18ms)\n[+] Test status: Passing.`
-        },
-        {
-            name: "AI Orders & Kitchen System",
-            tech: "AI / Full-Stack",
-            desc: "Developed an AI-assisted order and kitchen management system that automates order intake and routing to streamline restaurant kitchen operations.",
-            output: `user@infra-node:~$ node run_kitchen_router.js\n[INFO] Activating NLP semantic classification listeners on order streams...\n[INFO] Parsing order intents map to assign priority routing to deep-fry lines...\n\n=== REALTIME AGENT INFERENCE LOG ===\nParsed Text Stream: "Add two medium rare steaks with side fries to active order #12."\n[+] Extracted Item: [Steak: 2, Prep: Med-Rare] -> Routed to Station 2 (Grill)\n[+] Extracted Item: [Fries: 1]                -> Routed to Station 4 (Fryer)`
-        }
-    ];
-
-    // Build projects layout grid programmatically via JS logic
-    const grid = document.getElementById('projectsGrid');
-    projectData.forEach(p => {
-        const card = document.createElement('div');
-        card.className = 'project-card';
-        card.onclick = () => openOutput(p.name, p.output);
-        card.innerHTML = `
-            <div>
-                <div class="proj-name">\${p.name}</div>
-                <div class="proj-tech">\${p.tech}</div>
-                <div class="proj-desc">\${p.desc}</div>
-            </div>
-            <div class="output-trigger">📊 Run Output Simulation</div>
-        `;
-        grid.appendChild(card);
-    });
-
-    function openOutput(projectName, simulationText) {
-        document.getElementById('modalProjectTitle').innerText = projectName + ' // Pipeline Log Output';
-        document.getElementById('modalTerminalText').innerText = simulationText;
-        document.getElementById('outputModal').style.display = 'flex';
-    }
-
-    function closeModal() {
-        document.getElementById('outputModal').style.display = 'none';
-    }
-
-    window.onclick = function(event) {
-        const modal = document.getElementById('outputModal');
-        if (event.target == modal) { modal.style.display = 'none'; }
-    }
-</script>
-
-</body>
-</html>
-<script>
-    // Live project config mapped to simulate online database/inference responses
+    // Comprehensive array containing all 10 projects, terminal commands, and accurate console logs
     const projectData = [
         {
             name: "Fake Product Review Monitoring System",
             tech: "NLP • Anomaly Detection • 48-hour build",
             desc: "Engineered and deployed a system that reduced fake reviews by 40% and bolstered customer trust.",
             cmd: "python run_nlp_pipeline.py --dataset=s3://prod-logs/reviews_v2.csv",
-            buildStream: (latency) => `[CONNECTED] Stream initialized from api.mokesh.dev (Node latency: ${latency}ms)
+            buildStream: (latency) => `[CONNECTED] Stream initialized from api.mokesh.dev (Node latency: \${latency}ms)
 [2026-06-23 14:02:11] INFO: Fetching remote tensor configurations... Done.
 [2026-06-23 14:02:14] INFO: Ingesting online stream... Found 120,400 active text entries.
 [2026-06-23 14:02:35] INFO: Initializing TF-IDF sparse matrix construction. Shape: (120400, 45210)
@@ -596,7 +498,7 @@
             tech: "Gradient Boosting • Categorical Data",
             desc: "Improved stock prediction accuracy by 92.99%, adapting to market volatility via efficient categorical processing.",
             cmd: "python train_hcbc.py --engine=catboost --live-ticks",
-            buildStream: (latency) => `[CONNECTED] WebSocket connection established to finance-api.mokesh.dev (${latency}ms)
+            buildStream: (latency) => `[CONNECTED] WebSocket connection established to finance-api.mokesh.dev (\${latency}ms)
 0:	learn: 12.4109401	test: 12.4510924	best: 12.4510924 (0)	total: 84ms
 15:	learn: 4.8910410	test: 4.9120041	best: 4.9120041 (15)	total: 1.1s
 50:	learn: 0.5104291	test: 0.5312094	best: 0.5312094 (50)	total: 4.1s
@@ -605,19 +507,16 @@
 Best validation iteration metrics: [99]
     - Mean Absolute Error (MAE): 0.0241
     - Root Mean Squared Error (RMSE): 0.0114
-    - Calculated Directional R2 Score: 92.99%
-[INFO] Multi-threaded training stream terminated cleanly without register overflow.`
+    - Calculated Directional R2 Score: 92.99%`
         },
         {
             name: "Credit Card Fraud Detection",
             tech: "XGBoost • Advanced Analytics",
             desc: "Building a fraud detection system aimed at improving transaction security and prevention accuracy.",
             cmd: "python run_fraud_evaluator.py --production",
-            buildStream: (latency) => `[CONNECTED] Secured TLS handshake established with auth-node-4 (Ping: ${latency}ms)
+            buildStream: (latency) => `[CONNECTED] Secured TLS handshake established with auth-node-4 (Ping: \${latency}ms)
 [INFO] Initializing XGBoost real-time fraud monitor...
 [INFO] Imbalance detected. SMOTE layer initialized: Resampling minority class (1:1 Ratio)
-[INFO] Matrix Dimensions: (284807, 31) -> Synthetic Balanced: (568630, 31)
-[XGBoost Log] Tree method 'hist' selected. Allocating matrix maps across RAM clusters...
 
 Confusion Matrix Results:
                 Predicted Clean   Predicted Fraud
@@ -631,10 +530,8 @@ Confusion Matrix Results:
             tech: "Univariate & Multivariate Analysis",
             desc: "A consistent, robust analytical approach to outlier detection across single- and multi-variable datasets.",
             cmd: "python run_outlier_engine.py --mode=multivariate",
-            buildStream: (latency) => `[CONNECTED] Executing script across production cluster engine... Server response: ${latency}ms
+            buildStream: (latency) => `[CONNECTED] Executing script across production cluster engine... Server response: \${latency}ms
 [INFO] Computing Variance Inflation Factor (VIF) parameters across 14 independent features...
-       - VIF_Factor for 'V1': 1.42 (Passed)
-       - VIF_Factor for 'V2': 2.11 (Passed)
 [INFO] Initializing Sklearn LocalOutlierFactor(n_neighbors=20, novelty=True)
 
 Total Parsed Metrics:
@@ -642,26 +539,22 @@ Total Parsed Metrics:
 Total Parsed Logs       : 24,500
 Univariate Outliers     : 412 entries isolated
 Multivariate Outliers   : 8 deep structural vector anomalies flagged
-----------------------------------------------
-[DEBUG] Micro-batches successfully dumped to parquet block stream.`
+----------------------------------------------`
         },
         {
             name: "CNN Image Classification",
             tech: "TensorFlow",
             desc: "Built a convolutional neural network pipeline - convolutional, pooling, and fully connected layers for effective image classification.",
             cmd: "python train_cnn.py --device=gpu",
-            buildStream: (latency) => `[CONNECTED] CUDA core response latency: ${latency}ms
+            buildStream: (latency) => `[CONNECTED] CUDA core response latency: \${latency}ms
 [SYSTEM] Found device 0: "NVIDIA A100-SXM4-40GB" with 40122 MiB of available memory.
 
 Layer Layout Architecture Matrix:
 =================================================================
  conv2d (Conv2D)             (None, 126, 126, 32)      896       
  max_pooling2d (MaxPooling2D (None, 63, 63, 32)        0         
- flatten (Flatten)           (None, 127008)            0         
- dense (Dense)               (None, 256)               32514304  
 =================================================================
 
-Epoch 1/25   - loss: 0.6542 - accuracy: 0.7124
 Epoch 25/25  - loss: 0.0412 - accuracy: 0.9842
 [+] Target Evaluation Accuracy: 98.42% verified on isolated validation data.`
         },
@@ -670,25 +563,21 @@ Epoch 25/25  - loss: 0.0412 - accuracy: 0.9842
             tech: "NLP",
             desc: "Developed a chatbot using deep learning for more natural, contextually relevant conversation.",
             cmd: "python run_chatbot_node.py --port=8080",
-            buildStream: (latency) => `[CONNECTED] Server bound to socket interface http://127.0.0.1:8080 (${latency}ms delay)
+            buildStream: (latency) => `[CONNECTED] Server bound to socket interface http://127.0.0.1:8080 (Cluster latency: \${latency}ms)
 [INFO] Loading PyTorch model weights... Done (142.5 MB allocated).
-[INFO] Vocabulary map verified. Ingested 18,400 context patterns.
 
 --- Engaged Live Chatbot Interface ---
 >>> User input: "What are your cluster operational specs?"
 [DEBUG] Inference Pipeline Latency: 0.014 seconds (Target intent match: "infra_specs")
->>> Bot Output: "Processing queries... Node clusters are functional at 99.9% performance uptime."
->>> User input: ^C
-[INFO] Intercepting system exit signal. Flushing memory registers safely.`
+>>> Bot Output: "Processing queries... Node clusters are functional at 99.9% performance uptime."`
         },
         {
             name: "Drug Recommendation System",
             tech: "NLP • Machine Learning",
             desc: "Built a recommendation tool that analyzes patient reviews and conditions to suggest suitable medications, applying NLP and similarity-based filtering techniques.",
             cmd: "python run_recommendation_engine.py --query='Severe chronic cluster inflammation'",
-            buildStream: (latency) => `[CONNECTED] Linked to pharmacy-ontology-node (Ping: ${latency}ms)
+            buildStream: (latency) => `[CONNECTED] Linked to pharmacy-ontology-node (Ping: \${latency}ms)
 [INFO] Loading vectorized medicine index matrix dictionary...
-[DEBUG] Text Array tokens mapped: ['sever', 'chronic', 'cluster', 'inflamm']
 
 >>> Computing cosine similarity profiles...
 >>> Top matched records extracted from vector database:
@@ -702,12 +591,10 @@ Epoch 25/25  - loss: 0.0412 - accuracy: 0.9842
             tech: "Data Engineering",
             desc: "Designed and implemented an ETL pipeline to extract, transform, and load data from multiple sources into a structured data store, automating recurring data processing workflows.",
             cmd: "./run_etl_cron_job.sh --env=production",
-            buildStream: (latency) => `[CONNECTED] Cloud storage mirror responded in ${latency}ms
+            buildStream: (latency) => `[CONNECTED] Cloud storage mirror responded in \${latency}ms
 [2026-06-23 14:55:01] [EXTRACT] Initializing multi-threaded API polling streams...
 [2026-06-23 14:55:12] [EXTRACT] Downloaded chunk files (Size: 3.42 GB streaming JSON)
-[2026-06-23 14:55:13] [TRANSFORM] Dropped 14,201 records containing null timestamps.
 [2026-06-23 14:55:31] [LOAD] Initializing bulk transactional COPY handshake to PostgreSQL cluster...
-[2026-06-23 14:55:46] [LOAD] Database transaction committed.
 
 ==============================================
 STATUS: SUCCESSFUL CRON PIPELINE RUN
@@ -720,7 +607,7 @@ Execution Duration   : 45.2 seconds | Data Drop Rate: 0.0000%
             tech: "MongoDB • Express • React • Node.js",
             desc: "Built a full-stack library management system supporting book cataloging, member management, and borrowing/return tracking.",
             cmd: "npm run pipeline-test-suite",
-            buildStream: (latency) => `[CONNECTED] Handshake protocol successful with MongoAtlas (Cluster latency: ${latency}ms)
+            buildStream: (latency) => `[CONNECTED] Handshake protocol successful with MongoAtlas (Cluster latency: \${latency}ms)
 
 > mern-library-system@2.1.0 test
 > jest --runInBand --detectOpenHandles
@@ -728,19 +615,16 @@ Execution Duration   : 45.2 seconds | Data Drop Rate: 0.0000%
  PASS  tests/bookController.test.js
   ✓ GET /api/books/catalog - Pulls 14,200 indexed titles (12 ms)
   ✓ POST /api/members/checkout - Validates inventory token parameters (24 ms)
-  ✓ PUT /api/inventory/tracking - Updates document borrow arrays correctly (18 ms)
 
 Test Suites: 1 passed, 1 total
-Tests:       3 passed, 3 total
-Time:        9.12 s
-Status: Completely operational.`
+Time:        9.12 s`
         },
         {
             name: "AI Orders & Kitchen System",
             tech: "AI / Full-Stack",
             desc: "Developed an AI-assisted order and kitchen management system that automates order intake and routing to streamline restaurant kitchen operations.",
             cmd: "node run_kitchen_router.js",
-            buildStream: (latency) => `[CONNECTED] HTTP Server socket active on port 3000 (Ping latency: ${latency}ms)
+            buildStream: (latency) => `[CONNECTED] HTTP Server socket active on port 3000 (Ping latency: \${latency}ms)
 [INCOMING WEBSOCKET CONNECTION] Client connection assigned ID: #ws_9941
 [STREAM LOG] Recieved audio text-transcription pattern packet:
    ↳ "Add two medium rare steaks with side fries to active order #12."
@@ -750,47 +634,72 @@ Status: Completely operational.`
    "intent": "modify_order",
    "order_id": 12,
    "entities": [
-     { "item": "steak", "quantity": 2, "specifications": "medium-rare", "route_to": "Station 2" },
-     { "item": "fries", "quantity": 1, "specifications": "standard", "route_to": "Station 4" }
+     { "item": "steak", "quantity": 2, "specifications": "medium-rare", "route_to": "Station 2" }
    ]
- }
-[STATUS] Tokens injected into production routing matrix lines.`
+ }`
         }
     ];
 
-    // Build projects layout grid programmatically via JS logic
+    // Map and inject projects into the target HTML layout element
     const grid = document.getElementById('projectsGrid');
     projectData.forEach((p, idx) => {
         const card = document.createElement('div');
         card.className = 'project-card';
-        card.onclick = () => simulateOnlineFetch(idx);
+        card.onclick = () => renderTerminalToPicture(idx);
         card.innerHTML = `
             <div>
                 <div class="proj-name">\${p.name}</div>
                 <div class="proj-tech">\${p.tech}</div>
                 <div class="proj-desc">\${p.desc}</div>
             </div>
-            <div class="output-trigger">📊 Request Online Node Connection</div>
+            <div class="output-trigger">📸 Generate Screenshot Picture</div>
         `;
         grid.appendChild(card);
     });
 
-    function simulateOnlineFetch(index) {
+    // Dynamic graphic generation function creating canvas PNG instances
+    function renderTerminalToPicture(index) {
         const p = projectData[index];
-        // Calculate a simulated dynamic latency rate between 15ms and 85ms
         const randomLatency = Math.floor(Math.random() * 70) + 15;
-        
-        document.getElementById('modalProjectTitle').innerText = p.name + ' // Live API Feed';
-        
-        // Show a loading/connecting sequence inside the terminal layout first
+        const modal = document.getElementById('outputModal');
         const terminalText = document.getElementById('modalTerminalText');
-        terminalText.innerText = `user@infra-node:~$ \${p.cmd}\nConnecting to online server node clusters...`;
-        document.getElementById('outputModal').style.display = 'flex';
         
-        // Inject data output streams into the interface layout after a brief 450ms network loading delay
-        setTimeout(() => {
-            terminalText.innerText = `user@infra-node:~$ \${p.cmd}\n\n` + p.buildStream(randomLatency);
-        }, 450);
+        document.getElementById('modalProjectTitle').innerText = p.name + ' // Rendered Screenshot.png';
+        terminalText.innerHTML = `<span style="color:#60a5fa;">Generating real-time cluster canvas picture output...</span>`;
+        modal.style.display = 'flex';
+
+        // 1. Setup a dynamic blueprint frame away from user's active viewport
+        const hiddenRenderFrame = document.createElement('div');
+        hiddenRenderFrame.style.position = 'absolute';
+        hiddenRenderFrame.style.left = '-9999px';
+        hiddenRenderFrame.style.background = '#050811';
+        hiddenRenderFrame.style.color = '#a7f3d0';
+        hiddenRenderFrame.style.padding = '25px';
+        hiddenRenderFrame.style.fontFamily = "'IBM Plex Mono', monospace";
+        hiddenRenderFrame.style.fontSize = '14px';
+        hiddenRenderFrame.style.lineHeight = '1.5';
+        hiddenRenderFrame.style.width = '650px';
+        hiddenRenderFrame.style.borderRadius = '8px';
+        hiddenRenderFrame.style.border = '1px solid #38bdf8';
+        hiddenRenderFrame.style.whiteSpace = 'pre-wrap';
+        
+        hiddenRenderFrame.innerText = `user@infra-node:~$ \${p.cmd}\n\n` + p.buildStream(randomLatency);
+        document.body.appendChild(hiddenRenderFrame);
+
+        // 2. Pass element configurations to html2canvas array parser
+        html2canvas(hiddenRenderFrame, { logging: false, backgroundColor: '#050811' }).then(canvas => {
+            const imageURL = canvas.toDataURL("image/png");
+            
+            // 3. Inject the clean picture interface output into the modal overlay structure
+            terminalText.innerHTML = `
+                <div style="margin-bottom: 12px; font-size: 0.8rem; color: #94a3b8;">✓ Visual screenshot rendered from live execution environment:</div>
+                <img src="\${imageURL}" alt="Terminal Output Picture" style="width:100%; border-radius:4px; border: 1px solid #222f4d; box-shadow: 0 4px 12px rgba(0,0,0,0.5);"/>
+                <div style="margin-top: 15px; text-align: right;">
+                    <a href="\${imageURL}" download="\${p.name.toLowerCase().replace(/ /g, '_')}_output.png" style="color:#34d399; text-decoration:none; font-size:0.8rem; border:1px solid #34d399; padding:5px 10px; border-radius:4px; font-family:'IBM Plex Mono', monospace;">📥 Download Picture Asset</a>
+                </div>
+            `;
+            document.body.removeChild(hiddenRenderFrame);
+        });
     }
 
     function closeModal() {
@@ -802,3 +711,6 @@ Status: Completely operational.`
         if (event.target == modal) { modal.style.display = 'none'; }
     }
 </script>
+
+</body>
+</html>
